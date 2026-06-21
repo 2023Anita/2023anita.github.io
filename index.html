@@ -134,6 +134,26 @@ nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--color-b
 .project-tag{font-size:0.72rem;padding:0.15rem 0.5rem;border-radius:var(--radius-full);background:var(--color-primary-highlight);color:var(--color-primary);font-weight:600}
 .project-link{display:inline-flex;align-items:center;gap:var(--space-2);margin-top:auto;font-size:var(--text-xs);font-weight:600;color:var(--color-primary)}
 
+.contrib-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-4);margin-bottom:var(--space-8)}
+.contrib-stat{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-sm)}
+.contrib-stat-value{display:block;font-family:var(--font-display);font-size:var(--text-xl);line-height:1;color:var(--color-primary);margin-bottom:var(--space-2)}
+.contrib-stat-label{display:block;font-size:var(--text-xs);color:var(--color-text-muted);font-weight:600}
+.contrib-layout{display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.15fr);gap:var(--space-6);align-items:start}
+.contrib-panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+.contrib-panel-title{font-size:var(--text-sm);font-weight:600;color:var(--color-text);margin-bottom:var(--space-4)}
+.contrib-types{display:flex;flex-direction:column;gap:var(--space-4)}
+.contrib-type{border-left:3px solid var(--color-primary-highlight);padding-left:var(--space-4)}
+.contrib-type-name{font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:var(--space-1)}
+.contrib-type-desc{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.65}
+.repo-list{display:flex;flex-direction:column;gap:var(--space-4)}
+.repo-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3);align-items:start}
+.repo-name{font-size:var(--text-sm);font-weight:700;color:var(--color-text);line-height:1.25}
+.repo-meta{font-size:var(--text-xs);color:var(--color-accent);font-weight:700;white-space:nowrap}
+.repo-desc{grid-column:1/-1;font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.55;margin-top:-0.25rem}
+.repo-bar{grid-column:1/-1;height:6px;border-radius:var(--radius-full);background:var(--color-surface-offset);overflow:hidden}
+.repo-bar-fill{display:block;height:100%;width:var(--bar-width);border-radius:inherit;background:linear-gradient(90deg,var(--color-primary),color-mix(in srgb,var(--color-primary) 56%,var(--color-accent)))}
+.contrib-note{font-size:var(--text-xs);color:var(--color-text-faint);margin-top:var(--space-5)}
+
 .appt-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-5)}
 .appt-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5)}
 .appt-icon{width:40px;height:40px;background:var(--color-primary-highlight);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4)}
@@ -177,9 +197,16 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   .award-item{grid-template-columns:1fr}
   .award-badge{width:fit-content}
   .project-card{min-height:auto}
+  .contrib-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .contrib-layout{grid-template-columns:1fr}
   .hero::after{display:none}
   .hero::before{inset:var(--space-6) var(--space-4);opacity:0.24}
   .ambient-canvas{opacity:0.55}
+}
+@media(max-width:460px){
+  .contrib-summary{grid-template-columns:1fr}
+  .repo-item{grid-template-columns:1fr}
+  .repo-meta{white-space:normal}
 }
 @media(pointer:coarse),(prefers-reduced-motion:reduce){
   .tilt-card,.tilt-card:hover{transform:none;will-change:auto}
@@ -271,6 +298,27 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   </div>
 </section>
 
+<section id="open-source" class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-label" data-i18n="openSource.label"></p>
+      <h2 class="section-title" data-i18n="openSource.title"></h2>
+    </div>
+    <div class="contrib-summary" data-render="contribStats"></div>
+    <div class="contrib-layout">
+      <article class="contrib-panel">
+        <h3 class="contrib-panel-title" data-i18n="openSource.typesTitle"></h3>
+        <div class="contrib-types" data-render="contribTypes"></div>
+      </article>
+      <article class="contrib-panel">
+        <h3 class="contrib-panel-title" data-i18n="openSource.reposTitle"></h3>
+        <div class="repo-list" data-render="contribRepos"></div>
+        <p class="contrib-note" data-i18n="openSource.note"></p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section id="appointments" class="section">
   <div class="section-inner">
     <div class="section-header">
@@ -325,7 +373,14 @@ const content={
     },
     competitions:{label:'International Competitions',title:'Kaggle Competition Honors'},
     awards:{label:'National & Regional Recognition',title:'Awards & Projects'},
-    projects:{label:'Selected GitHub Work',title:'GitHub Projects',link:'View Repository',stars:'stars'},
+    projects:{label:'Owned GitHub Work',title:'GitHub Projects',link:'View Repository',stars:'stars'},
+    openSource:{
+      label:'Open Source Contributions',
+      title:'Merged PRs in High-Star GitHub Projects',
+      typesTitle:'Contribution patterns',
+      reposTitle:'Selected projects over 10K stars',
+      note:'Stats use merged PRs authored by 2023Anita and current public GitHub star counts as of Jun 2026.'
+    },
     appointments:{label:'Academic Service',title:'Professional Appointments'},
     skills:{label:'Technical Expertise',title:'Key Skills'},
     contact:{title:'Get in Touch',desc:'Interested in collaboration, research discussion, medical AI projects, or practical AI education? Feel free to reach out.'},
@@ -354,6 +409,26 @@ const content={
       {name:'codex-video-director-skill',stars:0,url:'https://github.com/2023Anita/codex-video-director-skill',desc:'A storyboard-driven Codex skill for AI video production and dual-style demos.',tags:['JavaScript','Video','Skill']},
       {name:'idea-evaluator',stars:0,url:'https://github.com/2023Anita/idea-evaluator',desc:'A skill-orchestration and idea-evaluation toolkit for AI developers.',tags:['Shell','AI Tools','Skills']}
     ],
+    contributionStats:[
+      {value:'31',label:'merged PRs'},
+      {value:'41',label:'merged commits'},
+      {value:'15',label:'external projects'},
+      {value:'~598K',label:'stars reached'}
+    ],
+    contributionTypes:[
+      {name:'Reliability fixes',desc:'Targeted bug fixes for tests, cleanup paths, encoding edge cases, dependency gates, and agent workflow reliability.'},
+      {name:'Documentation quality',desc:'Small, verifiable updates to stale links, resource references, project formats, and terminology in widely used repositories.'},
+      {name:'Research and clinical AI guidance',desc:'Contributions that translate clinical research habits into safer AI-agent, citation, and review workflows.'}
+    ],
+    contributionRepos:[
+      {name:'EbookFoundation/free-programming-books',stars:390557,prs:'1 merged PR',url:'https://github.com/EbookFoundation/free-programming-books',desc:'A global collection of freely available programming books; contributed a course-link HTTPS update.'},
+      {name:'DietrichGebert/ponytail',stars:43925,prs:'1 merged PR',url:'https://github.com/DietrichGebert/ponytail',desc:'An AI-agent engineering tool; contributed a test reliability fix that cleans temporary hook directories on failure.'},
+      {name:'github/awesome-copilot',stars:35350,prs:'1 merged PR',url:'https://github.com/github/awesome-copilot',desc:'GitHub Copilot community instructions, agents, skills, and configuration resources; clarified .NET Framework project formats.'},
+      {name:'Imbad0202/academic-research-skills',stars:33147,prs:'8 merged PRs',url:'https://github.com/Imbad0202/academic-research-skills',desc:'Claude Code skills for academic research, writing, review, and revision; contributed review, safety, and clinical citation guidance.'},
+      {name:'aishwaryanr/awesome-generative-ai-guide',stars:27802,prs:'1 merged PR',url:'https://github.com/aishwaryanr/awesome-generative-ai-guide',desc:'A curated guide to generative AI research and learning resources; updated a DeepLearning.AI resource link.'},
+      {name:'HKUDS/DeepTutor',stars:24859,prs:'3 merged PRs',url:'https://github.com/HKUDS/DeepTutor',desc:'An agent-native personalized tutoring project; contributed fixes for encoding, nested output handling, and Python dependency gates.'},
+      {name:'OthmanAdi/planning-with-files',stars:23683,prs:'1 merged PR',url:'https://github.com/OthmanAdi/planning-with-files',desc:'Persistent file-based planning for AI coding agents; contributed a non-blocking Codex stop hook fix.'}
+    ],
     appointmentsList:[
       {icon:'shield',role:'Expert Reviewer',org:'Fuzhou Municipal Health Science & Technology Program Expert Panel',date:'Enrolled Oct 2025 · Specialties: Anesthesiology, Clinical Decision Support'},
       {icon:'book',role:'Peer Reviewer',org:'Chinese Medical Association — Digital Medicine and Health Journal',date:'Enrolled Jun 2024 · Specialty: Medicine × AI Interdisciplinary'}
@@ -380,7 +455,14 @@ const content={
     },
     competitions:{label:'国际竞赛',title:'Kaggle 竞赛荣誉'},
     awards:{label:'国家与区域成果',title:'奖项与项目'},
-    projects:{label:'精选 GitHub 作品',title:'GitHub 代表项目',link:'查看仓库',stars:'stars'},
+    projects:{label:'个人 GitHub 作品',title:'GitHub 代表项目',link:'查看仓库',stars:'stars'},
+    openSource:{
+      label:'开源贡献',
+      title:'已合并到高星 GitHub 项目的 PR',
+      typesTitle:'贡献类型',
+      reposTitle:'超过 1 万星的代表项目',
+      note:'统计口径为 2023Anita 发起并已合并的 PR，星标数采用 2026 年 6 月查询时的公开 GitHub 数据。'
+    },
     appointments:{label:'学术服务',title:'专业任职'},
     skills:{label:'技术能力',title:'核心技能'},
     contact:{title:'联系我',desc:'如果你对医学人工智能、科研协作、临床 AI 项目或 AI 教学感兴趣，欢迎联系。'},
@@ -409,6 +491,26 @@ const content={
       {name:'codex-video-director-skill',stars:0,url:'https://github.com/2023Anita/codex-video-director-skill',desc:'基于 storyboard 的 AI 视频生产 Codex skill 与双风格演示。',tags:['JavaScript','视频','Skill']},
       {name:'idea-evaluator',stars:0,url:'https://github.com/2023Anita/idea-evaluator',desc:'面向 AI 开发者的 skill 编排与想法评估工具。',tags:['Shell','AI 工具','Skills']}
     ],
+    contributionStats:[
+      {value:'31',label:'已合并 PR'},
+      {value:'41',label:'已合并提交'},
+      {value:'15',label:'外部项目'},
+      {value:'约 59.8 万',label:'覆盖项目星标'}
+    ],
+    contributionTypes:[
+      {name:'可靠性修复',desc:'围绕测试清理、编码兼容、依赖版本门控和 AI agent 工作流稳定性，提交可验证的小范围修复。'},
+      {name:'文档质量改进',desc:'修复失效链接、更新资源引用、澄清项目格式和术语，让高使用量仓库的文档更准确。'},
+      {name:'科研与临床 AI 方法',desc:'把临床科研中的引用核验、安全边界和审阅习惯，转化为 AI agent 与科研技能仓库中的可执行指南。'}
+    ],
+    contributionRepos:[
+      {name:'EbookFoundation/free-programming-books',stars:390557,prs:'1 个 merged PR',url:'https://github.com/EbookFoundation/free-programming-books',desc:'全球免费编程书籍资源库；贡献内容是更新课程链接为 HTTPS。'},
+      {name:'DietrichGebert/ponytail',stars:43925,prs:'1 个 merged PR',url:'https://github.com/DietrichGebert/ponytail',desc:'面向 AI agent 的工程工具；贡献内容是修复测试失败时临时 hook 目录残留的问题。'},
+      {name:'github/awesome-copilot',stars:35350,prs:'1 个 merged PR',url:'https://github.com/github/awesome-copilot',desc:'GitHub Copilot 指令、agent、skill 与配置资源集合；贡献内容是澄清 .NET Framework 项目格式。'},
+      {name:'Imbad0202/academic-research-skills',stars:33147,prs:'8 个 merged PR',url:'https://github.com/Imbad0202/academic-research-skills',desc:'面向 Claude Code 的学术研究、写作、审阅和修订技能库；贡献内容覆盖审阅、安全边界和临床引用核验。'},
+      {name:'aishwaryanr/awesome-generative-ai-guide',stars:27802,prs:'1 个 merged PR',url:'https://github.com/aishwaryanr/awesome-generative-ai-guide',desc:'生成式 AI 研究与学习资源指南；贡献内容是更新 DeepLearning.AI 相关资源链接。'},
+      {name:'HKUDS/DeepTutor',stars:24859,prs:'3 个 merged PR',url:'https://github.com/HKUDS/DeepTutor',desc:'Agent-native 个性化教学项目；贡献内容包括编码兼容、嵌套输出处理和 Python 依赖版本门控。'},
+      {name:'OthmanAdi/planning-with-files',stars:23683,prs:'1 个 merged PR',url:'https://github.com/OthmanAdi/planning-with-files',desc:'面向 AI coding agents 的持久化文件计划系统；贡献内容是修复 Codex stop hook 阻塞问题。'}
+    ],
     appointmentsList:[
       {icon:'shield',role:'评审专家',org:'福州市卫生健康科技计划项目专家库',date:'2025 年 10 月入库 · 专业方向：麻醉学、临床决策支持'},
       {icon:'book',role:'审稿专家',org:'中华医学会《数字医学与健康》期刊',date:'2024 年 6 月入库 · 医学与人工智能交叉方向'}
@@ -435,7 +537,14 @@ const content={
     },
     competitions:{label:'国際コンペティション',title:'Kaggle 受賞歴'},
     awards:{label:'国内・地域での評価',title:'受賞とプロジェクト'},
-    projects:{label:'GitHub 代表作',title:'GitHub 代表プロジェクト',link:'リポジトリを見る',stars:'stars'},
+    projects:{label:'個人 GitHub 作品',title:'GitHub 代表プロジェクト',link:'リポジトリを見る',stars:'stars'},
+    openSource:{
+      label:'Open Source Contributions',
+      title:'高スター GitHub プロジェクトにマージされた PR',
+      typesTitle:'貢献のタイプ',
+      reposTitle:'1 万スター以上の代表プロジェクト',
+      note:'統計は 2023Anita が作成しマージされた PR と、2026 年 6 月時点の公開 GitHub star 数に基づきます。'
+    },
     appointments:{label:'学術サービス',title:'専門活動'},
     skills:{label:'技術領域',title:'主要スキル'},
     contact:{title:'お問い合わせ',desc:'医療 AI、研究協力、臨床 AI プロジェクト、実践的な AI 教育に関心がありましたら、お気軽にご連絡ください。'},
@@ -463,6 +572,26 @@ const content={
       {name:'ai-coding-intel-radar',stars:2,url:'https://github.com/2023Anita/ai-coding-intel-radar',desc:'Cloudflare、Codex、Obsidian を組み合わせた日次 AI コーディング情報レーダーのテンプレート。',tags:['JavaScript','Cloudflare','Obsidian']},
       {name:'codex-video-director-skill',stars:0,url:'https://github.com/2023Anita/codex-video-director-skill',desc:'ストーリーボード駆動の AI 動画制作を支援する Codex skill とデモ。',tags:['JavaScript','動画','Skill']},
       {name:'idea-evaluator',stars:0,url:'https://github.com/2023Anita/idea-evaluator',desc:'AI 開発者向けの skill オーケストレーションとアイデア評価ツール。',tags:['Shell','AI ツール','Skills']}
+    ],
+    contributionStats:[
+      {value:'31',label:'merged PRs'},
+      {value:'41',label:'merged commits'},
+      {value:'15',label:'外部プロジェクト'},
+      {value:'約 59.8 万',label:'到達スター数'}
+    ],
+    contributionTypes:[
+      {name:'Reliability fixes',desc:'テスト後片付け、文字エンコーディング、依存関係のバージョン制約、AI agent ワークフローの安定性に関する小さく検証可能な修正。'},
+      {name:'Documentation quality',desc:'古いリンク、リソース参照、プロジェクト形式、用語説明を整え、利用者の多いリポジトリの文書品質を改善。'},
+      {name:'Research and clinical AI guidance',desc:'臨床研究で重視される引用確認、安全境界、レビュー習慣を、AI agent と研究 skill の実践的ガイドに反映。'}
+    ],
+    contributionRepos:[
+      {name:'EbookFoundation/free-programming-books',stars:390557,prs:'1 merged PR',url:'https://github.com/EbookFoundation/free-programming-books',desc:'無料で読めるプログラミング書籍の世界的リスト。コースリンクを HTTPS に更新しました。'},
+      {name:'DietrichGebert/ponytail',stars:43925,prs:'1 merged PR',url:'https://github.com/DietrichGebert/ponytail',desc:'AI agent 向けの開発支援ツール。テスト失敗時に一時 hook ディレクトリを確実に片付ける修正を行いました。'},
+      {name:'github/awesome-copilot',stars:35350,prs:'1 merged PR',url:'https://github.com/github/awesome-copilot',desc:'GitHub Copilot の instructions、agents、skills、設定を集めたコミュニティリソース。.NET Framework プロジェクト形式の説明を明確化しました。'},
+      {name:'Imbad0202/academic-research-skills',stars:33147,prs:'8 merged PRs',url:'https://github.com/Imbad0202/academic-research-skills',desc:'Claude Code 向けの学術研究、執筆、レビュー、修正 skill 集。レビュー、安全境界、臨床引用確認に関する貢献を行いました。'},
+      {name:'aishwaryanr/awesome-generative-ai-guide',stars:27802,prs:'1 merged PR',url:'https://github.com/aishwaryanr/awesome-generative-ai-guide',desc:'生成 AI の研究・学習リソースガイド。DeepLearning.AI 関連リンクを更新しました。'},
+      {name:'HKUDS/DeepTutor',stars:24859,prs:'3 merged PRs',url:'https://github.com/HKUDS/DeepTutor',desc:'Agent-native な個別化チュータリングプロジェクト。エンコーディング、ネスト出力、Python 依存関係の修正を行いました。'},
+      {name:'OthmanAdi/planning-with-files',stars:23683,prs:'1 merged PR',url:'https://github.com/OthmanAdi/planning-with-files',desc:'AI coding agents 向けの永続的なファイルベース計画システム。Codex stop hook を非ブロッキングにする修正を行いました。'}
     ],
     appointmentsList:[
       {icon:'shield',role:'評価専門家',org:'福州市衛生健康科学技術計画プロジェクト専門家パネル',date:'2025 年 10 月登録 · 専門：麻酔学、臨床意思決定支援'},
@@ -533,6 +662,24 @@ function render(lang){
       <a class="project-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.projects.link)}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
+    </article>`).join('');
+  document.querySelector('[data-render="contribStats"]').innerHTML=c.contributionStats.map(item=>`
+    <article class="contrib-stat">
+      <span class="contrib-stat-value">${escapeHtml(item.value)}</span>
+      <span class="contrib-stat-label">${escapeHtml(item.label)}</span>
+    </article>`).join('');
+  document.querySelector('[data-render="contribTypes"]').innerHTML=c.contributionTypes.map(item=>`
+    <article class="contrib-type">
+      <h4 class="contrib-type-name">${escapeHtml(item.name)}</h4>
+      <p class="contrib-type-desc">${escapeHtml(item.desc)}</p>
+    </article>`).join('');
+  const maxStars=Math.max(...c.contributionRepos.map(item=>item.stars));
+  document.querySelector('[data-render="contribRepos"]').innerHTML=c.contributionRepos.map(item=>`
+    <article class="repo-item">
+      <a class="repo-name" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.name)}</a>
+      <span class="repo-meta">${item.stars.toLocaleString('en-US')} stars · ${escapeHtml(item.prs)}</span>
+      <p class="repo-desc">${escapeHtml(item.desc)}</p>
+      <div class="repo-bar" aria-hidden="true"><span class="repo-bar-fill" style="--bar-width:${Math.max(6,Math.round(item.stars/maxStars*100))}%"></span></div>
     </article>`).join('');
   document.querySelector('[data-render="appointments"]').innerHTML=c.appointmentsList.map(item=>`
     <article class="appt-card">
