@@ -129,10 +129,16 @@ nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--color-b
 .award-meta{font-size:var(--text-xs);color:var(--color-text-muted)}
 
 .project-card{display:flex;flex-direction:column;min-height:230px}
+.project-card.featured-project{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,0.95fr);gap:var(--space-6);align-items:center;min-height:auto}
+.project-media{position:relative;border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface-offset);box-shadow:var(--shadow-sm)}
+.project-media img{width:100%;aspect-ratio:1.13/1;object-fit:contain;object-position:center}
+.project-body{display:flex;flex-direction:column;min-width:0}
 .project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-3)}
 .project-tags{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-4) 0}
 .project-tag{font-size:0.72rem;padding:0.15rem 0.5rem;border-radius:var(--radius-full);background:var(--color-primary-highlight);color:var(--color-primary);font-weight:600}
-.project-link{display:inline-flex;align-items:center;gap:var(--space-2);margin-top:auto;font-size:var(--text-xs);font-weight:600;color:var(--color-primary)}
+.project-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:auto}
+.project-link{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);font-weight:600;color:var(--color-primary)}
+.project-card:not(.featured-project) .project-link{margin-top:auto}
 
 .contrib-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-4);margin-bottom:var(--space-8)}
 .contrib-stat{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-sm)}
@@ -198,6 +204,7 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   .award-item{grid-template-columns:1fr}
   .award-badge{width:fit-content}
   .project-card{min-height:auto}
+  .project-card.featured-project{grid-template-columns:1fr}
   .contrib-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
   .contrib-layout{grid-template-columns:1fr}
   .hero::after{display:none}
@@ -386,7 +393,7 @@ const content={
     },
     competitions:{label:'International Competitions',title:'Kaggle Competition Honors'},
     awards:{label:'National & Regional Recognition',title:'Awards & Projects'},
-    projects:{label:'Owned GitHub Work',title:'GitHub Projects',link:'View Repository',stars:'stars'},
+    projects:{label:'Owned GitHub Work',title:'GitHub Projects',link:'View Repository',site:'Live Website',repo:'GitHub',stars:'stars'},
     openSource:{
       label:'Open Source Contributions',
       title:'Merged PRs in High-Star GitHub Projects',
@@ -411,6 +418,7 @@ const content={
       {badge:'3rd Prize',title:'2025 National Smart Medical Insurance Competition',project:'Medical Insurance Value Compass (Agent Edition)',meta:"Organizer: National Healthcare Security Administration · Team: Datapower · Jiangyin People's Hospital",desc:'Built an agent-style view of medical-insurance value assessment for healthcare decision support.'}
     ],
     projectsList:[
+      {name:'AI and Anesthesia Teaching Courseware',stars:3,url:'https://github.com/2023Anita/anesthesia-teaching-courseware',siteUrl:'https://2023anita.github.io/anesthesia-teaching-courseware/',image:'assets/ai-anesthesia-teaching-courseware.png',imageAlt:'AI and Anesthesia Teaching Courseware website preview',desc:'A bilingual, visual anesthesia teaching website for Cornell first-year students and early medical learners, created through a clinician-led, AI-assisted workflow.',tags:['Anesthesiology','Medical Education','AI Courseware','GitHub Pages']},
       {name:'MedicalAI-Platform',stars:48,url:'https://github.com/2023Anita/MedicalAI-Platform',desc:'A multi-agent medical analysis platform for structured health-report interpretation and clinical reasoning workflows.',tags:['TypeScript','Medical AI','Agents']},
       {name:'Smart-Fit-Agent',stars:10,url:'https://github.com/2023Anita/Smart-Fit-Agent',desc:'An AI-powered health management app for personalized meal plans, exercise routines, and food analysis.',tags:['TypeScript','Health Agent','Lifestyle']},
       {name:'med-dataset-platform',stars:3,url:'https://github.com/2023Anita/med-dataset-platform',desc:'A professional platform for generating, managing, and exporting medical AI datasets.',tags:['JavaScript','Dataset','Medical AI']},
@@ -468,7 +476,7 @@ const content={
     },
     competitions:{label:'国际竞赛',title:'Kaggle 竞赛荣誉'},
     awards:{label:'国家与区域成果',title:'奖项与项目'},
-    projects:{label:'个人 GitHub 作品',title:'GitHub 代表项目',link:'查看仓库',stars:'stars'},
+    projects:{label:'个人 GitHub 作品',title:'GitHub 代表项目',link:'查看仓库',site:'访问网站',repo:'GitHub',stars:'stars'},
     openSource:{
       label:'开源贡献',
       title:'已合并到高星 GitHub 项目的 PR',
@@ -493,6 +501,7 @@ const content={
       {badge:'三等奖',title:'2025 全国智慧医保大赛',project:'医保价值罗盘（Agent 版）',meta:'主办方：国家医疗保障局 · Datapower 团队 · 江阴市人民医院',desc:'以智能体方式呈现医保价值评估视角，服务医疗决策支持。'}
     ],
     projectsList:[
+      {name:'AI and Anesthesia Teaching Courseware',stars:3,url:'https://github.com/2023Anita/anesthesia-teaching-courseware',siteUrl:'https://2023anita.github.io/anesthesia-teaching-courseware/',image:'assets/ai-anesthesia-teaching-courseware.png',imageAlt:'AI and Anesthesia Teaching Courseware 网站截图',desc:'面向康奈尔大一学生和医学初学者的中英双语麻醉见习课件网站，结合临床带教、AI 辅助内容生成、医学可视化与 GitHub Pages 发布。',tags:['麻醉学','医学教育','AI 课件','GitHub Pages']},
       {name:'MedicalAI-Platform',stars:48,url:'https://github.com/2023Anita/MedicalAI-Platform',desc:'多智能体医疗分析平台，面向体检报告结构化解读和临床推理工作流。',tags:['TypeScript','医疗 AI','Agents']},
       {name:'Smart-Fit-Agent',stars:10,url:'https://github.com/2023Anita/Smart-Fit-Agent',desc:'个性化健康管理应用，支持饮食计划、运动方案和食物智能分析。',tags:['TypeScript','健康 Agent','生活方式']},
       {name:'med-dataset-platform',stars:3,url:'https://github.com/2023Anita/med-dataset-platform',desc:'专业医疗 AI 数据集生成、管理与导出平台。',tags:['JavaScript','数据集','医疗 AI']},
@@ -550,7 +559,7 @@ const content={
     },
     competitions:{label:'国際コンペティション',title:'Kaggle 受賞歴'},
     awards:{label:'国内・地域での評価',title:'受賞とプロジェクト'},
-    projects:{label:'個人 GitHub 作品',title:'GitHub 代表プロジェクト',link:'リポジトリを見る',stars:'stars'},
+    projects:{label:'個人 GitHub 作品',title:'GitHub 代表プロジェクト',link:'リポジトリを見る',site:'サイトを見る',repo:'GitHub',stars:'stars'},
     openSource:{
       label:'Open Source Contributions',
       title:'高スター GitHub プロジェクトにマージされた PR',
@@ -575,6 +584,7 @@ const content={
       {badge:'三等賞',title:'2025 全国スマート医療保険コンテスト',project:'Medical Insurance Value Compass（Agent 版）',meta:'主催：国家医療保障局 · Team Datapower · 江陰市人民医院',desc:'医療保険価値評価を Agent 形式で整理し、医療意思決定支援に活用する視点を示しました。'}
     ],
     projectsList:[
+      {name:'AI and Anesthesia Teaching Courseware',stars:3,url:'https://github.com/2023Anita/anesthesia-teaching-courseware',siteUrl:'https://2023anita.github.io/anesthesia-teaching-courseware/',image:'assets/ai-anesthesia-teaching-courseware.png',imageAlt:'AI and Anesthesia Teaching Courseware website preview',desc:'Cornell の一年生と医学初学者向けに作成した、英中バイリンガルの麻酔見学コースウェア。臨床医主導の教育と AI 支援による教材設計を組み合わせています。',tags:['麻酔学','医学教育','AI 教材','GitHub Pages']},
       {name:'MedicalAI-Platform',stars:48,url:'https://github.com/2023Anita/MedicalAI-Platform',desc:'健診レポートの構造化解釈と臨床推論ワークフローを支援する、マルチエージェント医療分析プラットフォーム。',tags:['TypeScript','医療 AI','Agents']},
       {name:'Smart-Fit-Agent',stars:10,url:'https://github.com/2023Anita/Smart-Fit-Agent',desc:'食事計画、運動プラン、食品分析を支援する個別化健康管理アプリ。',tags:['TypeScript','健康 Agent','生活習慣']},
       {name:'med-dataset-platform',stars:3,url:'https://github.com/2023Anita/med-dataset-platform',desc:'医療 AI データセットの生成、管理、エクスポートを行う専門プラットフォーム。',tags:['JavaScript','データセット','医療 AI']},
@@ -664,18 +674,38 @@ function render(lang){
         <p class="award-meta">${escapeHtml(item.meta)}<br>${escapeHtml(item.desc)}</p>
       </div>
     </article>`).join('');
-  document.querySelector('[data-render="projects"]').innerHTML=c.projectsList.map(item=>`
-    <article class="project-card tilt-card">
-      <div class="project-top">
-        <h3 class="project-title">${escapeHtml(item.name)}</h3>
-        ${item.stars>0?`<span class="project-stars">${item.stars} ${escapeHtml(c.projects.stars)}</span>`:''}
-      </div>
-      <p class="project-desc">${escapeHtml(item.desc)}</p>
-      <div class="project-tags">${item.tags.map(tag=>`<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}</div>
-      <a class="project-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.projects.link)}
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-      </a>
-    </article>`).join('');
+  document.querySelector('[data-render="projects"]').innerHTML=c.projectsList.map(item=>{
+    const links=item.siteUrl
+      ? `<div class="project-actions">
+          <a class="project-link" href="${escapeHtml(item.siteUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.projects.site)}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+          <a class="project-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.projects.repo)}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>`
+      : `<a class="project-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.projects.link)}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </a>`;
+    const body=`
+      <div class="project-body">
+        <div class="project-top">
+          <h3 class="project-title">${escapeHtml(item.name)}</h3>
+          ${item.stars>0?`<span class="project-stars">${item.stars} ${escapeHtml(c.projects.stars)}</span>`:''}
+        </div>
+        <p class="project-desc">${escapeHtml(item.desc)}</p>
+        <div class="project-tags">${item.tags.map(tag=>`<span class="project-tag">${escapeHtml(tag)}</span>`).join('')}</div>
+        ${links}
+      </div>`;
+    return item.image
+      ? `<article class="project-card featured-project tilt-card">
+          <figure class="project-media">
+            <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.imageAlt||item.name)}" loading="lazy">
+          </figure>
+          ${body}
+        </article>`
+      : `<article class="project-card tilt-card">${body}</article>`;
+  }).join('');
   document.querySelector('[data-render="contribStats"]').innerHTML=c.contributionStats.map(item=>`
     <article class="contrib-stat">
       <span class="contrib-stat-value">${escapeHtml(item.value)}</span>
