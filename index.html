@@ -190,8 +190,15 @@ nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--color-b
 
 .communication-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,0.85fr);gap:var(--space-5)}
 .communication-card{position:relative;padding:var(--space-6);overflow:hidden}
-.communication-card.featured{min-height:260px}
+.communication-card.featured{min-height:320px}
 .communication-card::after{content:"";position:absolute;right:-42px;top:-42px;width:130px;height:130px;border:1px solid color-mix(in srgb,var(--color-primary) 34%,transparent);border-radius:50%;opacity:0.45}
+.communication-feature-layout{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) 174px;gap:var(--space-6);align-items:center;min-height:270px}
+.communication-copy{min-width:0}
+.communication-qr{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;justify-self:end;gap:var(--space-2);width:174px;padding:var(--space-2) var(--space-2) var(--space-3);border:1px solid color-mix(in srgb,var(--color-accent) 30%,var(--color-border));border-radius:var(--radius-md);background:color-mix(in srgb,var(--color-surface) 82%,transparent);box-shadow:var(--shadow-sm);transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition)}
+.communication-qr::before{content:"";position:absolute;left:var(--space-3);right:var(--space-3);top:0;height:3px;border-radius:var(--radius-full);background:linear-gradient(90deg,var(--color-accent),var(--color-primary));opacity:0.7}
+.communication-qr img{display:block;width:154px;height:auto;aspect-ratio:7/8;border-radius:calc(var(--radius-md) - 2px);object-fit:contain;background:#fff;box-shadow:0 5px 14px rgba(40,37,29,0.08)}
+.communication-qr-label{font-size:0.68rem;font-weight:700;line-height:1.25;color:var(--color-primary);text-align:center}
+.communication-qr:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--color-primary) 40%,var(--color-border));box-shadow:var(--shadow-md)}
 .communication-name{font-size:var(--text-lg);color:var(--color-text);margin-bottom:var(--space-2)}
 .communication-role{font-size:var(--text-sm);font-weight:700;color:var(--color-primary);margin-bottom:var(--space-3)}
 .communication-desc{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7}
@@ -219,7 +226,12 @@ nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--color-b
 .contrib-stat-value{display:block;font-family:var(--font-display);font-size:var(--text-xl);line-height:1;color:var(--color-primary);margin-bottom:var(--space-2)}
 .contrib-stat-label{display:block;font-size:var(--text-xs);color:var(--color-text-muted);font-weight:600}
 .contrib-layout{display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.15fr);gap:var(--space-6);align-items:start}
+.contrib-side{display:flex;flex-direction:column;gap:var(--space-6);height:100%;min-width:0}
 .contrib-panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+.contrib-illustration{position:relative;display:flex;align-items:center;justify-content:center;flex:1;min-height:360px;margin:0;padding:var(--space-3);border:1px solid color-mix(in srgb,var(--color-primary) 16%,var(--color-border));border-radius:var(--radius-lg);background:radial-gradient(circle at 18% 20%,color-mix(in srgb,var(--color-primary-highlight) 64%,transparent),transparent 12rem),linear-gradient(145deg,color-mix(in srgb,var(--color-surface) 88%,transparent),color-mix(in srgb,var(--color-surface-2) 78%,transparent));box-shadow:var(--shadow-sm);overflow:hidden}
+.contrib-illustration::before{content:"";position:absolute;inset:10% 8%;border:1px solid color-mix(in srgb,var(--color-primary) 12%,transparent);border-radius:45% 55% 48% 52%;transform:rotate(-4deg);opacity:0.7}
+.contrib-illustration::after{content:"";position:absolute;right:12%;bottom:11%;width:42px;height:42px;border:1px solid color-mix(in srgb,var(--color-accent) 26%,transparent);border-radius:50%;box-shadow:0 0 0 8px color-mix(in srgb,var(--color-accent) 7%,transparent);opacity:0.72}
+.contrib-illustration img{position:relative;z-index:1;display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;border-radius:var(--radius-md);mix-blend-mode:multiply;filter:saturate(0.9)}
 .contrib-panel-title{font-size:var(--text-sm);font-weight:600;color:var(--color-text);margin-bottom:var(--space-4)}
 .contrib-types{display:flex;flex-direction:column;gap:var(--space-4)}
 .contrib-type{border-left:3px solid var(--color-primary-highlight);padding-left:var(--space-4)}
@@ -283,14 +295,14 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   opacity:0.66;animation:system-pulse 9s ease-in-out infinite alternate}
 .system-particle-field{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .system-particle{position:absolute;width:var(--size,4px);height:var(--size,4px);left:var(--x);top:var(--y);border-radius:50%;background:color-mix(in srgb,var(--color-primary) 70%,white);box-shadow:0 0 18px var(--glow-strong);opacity:0.34;animation:particle-drift var(--duration,12s) ease-in-out infinite;animation-delay:var(--delay,0s)}
-.system-shell{position:relative;z-index:2;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:300px minmax(0,1fr);gap:var(--space-6);min-height:calc(100dvh - 64px);padding:var(--space-8) var(--space-6)}
-.system-sidebar{position:sticky;top:88px;height:max-content;border:1px solid color-mix(in srgb,var(--color-primary) 16%,var(--color-border));border-radius:var(--radius-lg);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 82%,transparent),color-mix(in srgb,var(--color-primary-highlight) 28%,transparent));padding:var(--space-6);box-shadow:var(--shadow-md);backdrop-filter:blur(16px);overflow:hidden}
+.system-shell{position:relative;z-index:2;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:var(--space-5);min-height:calc(100dvh - 64px);padding:var(--space-8) var(--space-6) var(--space-10)}
+.system-sidebar{position:sticky;top:88px;height:max-content;border:1px solid color-mix(in srgb,var(--color-primary) 16%,var(--color-border));border-radius:var(--radius-lg);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 82%,transparent),color-mix(in srgb,var(--color-primary-highlight) 28%,transparent));padding:var(--space-5);box-shadow:var(--shadow-md);backdrop-filter:blur(16px);overflow:hidden}
 .system-sidebar::after{content:"";position:absolute;left:var(--space-6);right:var(--space-6);bottom:var(--space-6);height:1px;background:linear-gradient(90deg,var(--color-primary),transparent);opacity:0.38}
 .system-desc{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-4)}
-.system-layers{display:flex;flex-direction:column;gap:var(--space-3);margin-top:var(--space-8)}
+.system-layers{display:flex;flex-direction:column;gap:var(--space-2);margin-top:var(--space-6)}
 .system-layer{position:relative;display:flex;align-items:center;gap:var(--space-3);font-size:var(--text-xs);font-weight:700;color:var(--color-text-muted);padding:0.58rem 0;border-bottom:1px solid color-mix(in srgb,var(--color-border) 64%,transparent)}
 .system-layer::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--node-color,var(--color-primary));box-shadow:0 0 0 4px color-mix(in srgb,var(--node-color,var(--color-primary)) 16%,transparent)}
-.system-canvas{position:relative;min-height:680px;border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:linear-gradient(145deg,color-mix(in srgb,var(--color-surface-2) 88%,transparent),color-mix(in srgb,var(--color-primary-highlight) 28%,var(--color-surface)) 46%,color-mix(in srgb,var(--color-surface) 86%,transparent));box-shadow:var(--shadow-lg);backdrop-filter:blur(12px)}
+.system-canvas{position:relative;min-height:0;border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:linear-gradient(145deg,color-mix(in srgb,var(--color-surface-2) 88%,transparent),color-mix(in srgb,var(--color-primary-highlight) 28%,var(--color-surface)) 46%,color-mix(in srgb,var(--color-surface) 86%,transparent));box-shadow:var(--shadow-lg);backdrop-filter:blur(12px)}
 .system-grid-bg{position:absolute;inset:0;overflow:hidden;background:
   radial-gradient(circle at 8% 12%,color-mix(in srgb,var(--color-primary) 12%,transparent),transparent 10rem),
   radial-gradient(circle at 88% 80%,color-mix(in srgb,var(--color-accent) 9%,transparent),transparent 12rem),
@@ -332,18 +344,21 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
 @keyframes arrow-flow-y{0%,100%{transform:translateY(0);opacity:0.45}50%{transform:translateY(4px);opacity:1}}
 @keyframes card-breathe{0%,100%{box-shadow:var(--shadow-sm)}50%{box-shadow:0 10px 28px color-mix(in srgb,var(--lane-color,var(--color-primary)) 16%,transparent)}}
 
-.workflow-canvas{min-height:820px;padding:var(--space-6);display:grid;grid-template-columns:minmax(250px,0.72fr) minmax(0,1.28fr);gap:var(--space-5);align-items:start}
-.workflow-left{position:relative;z-index:2;display:grid;gap:var(--space-5);align-content:start}
-.workflow-header{position:relative;z-index:2;max-width:none;padding:var(--space-5) var(--space-6);border:1px solid color-mix(in srgb,var(--color-primary) 18%,var(--color-border));border-radius:var(--radius-lg);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 86%,transparent),color-mix(in srgb,var(--color-surface-2) 66%,transparent));box-shadow:var(--shadow-md);backdrop-filter:blur(14px);animation:flow-in 700ms var(--transition) both;overflow:hidden}
+.workflow-canvas{min-height:0;padding:var(--space-5);display:grid;grid-template-columns:1fr;gap:var(--space-4);align-items:start}
+.workflow-left{position:relative;z-index:2;display:contents}
+.workflow-header{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,0.9fr);gap:var(--space-6);align-items:center;max-width:none;padding:var(--space-6);border:1px solid color-mix(in srgb,var(--color-primary) 18%,var(--color-border));border-radius:var(--radius-lg);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 86%,transparent),color-mix(in srgb,var(--color-surface-2) 66%,transparent));box-shadow:var(--shadow-md);backdrop-filter:blur(14px);animation:flow-in 700ms var(--transition) both;overflow:hidden}
+.workflow-header-copy{position:relative;z-index:2;min-width:0}
 .workflow-header::after{content:"";position:absolute;right:-2rem;top:-2rem;width:10rem;height:10rem;border-radius:50%;border:1px solid color-mix(in srgb,var(--color-primary) 20%,transparent);background:radial-gradient(circle,color-mix(in srgb,var(--color-primary) 10%,transparent),transparent 62%);opacity:0.72}
 .workflow-eyebrow{font-size:0.72rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--color-accent);margin-bottom:var(--space-2)}
 .workflow-header h3{font-family:var(--font-display);font-size:var(--text-xl);line-height:1.05;margin-bottom:var(--space-3)}
 .workflow-header p:not(.workflow-eyebrow){font-size:var(--text-sm);color:var(--color-text-muted)}
-.workflow-console{position:relative;z-index:2;margin-top:var(--space-5);padding:var(--space-3) var(--space-4);border:1px solid color-mix(in srgb,var(--color-primary) 18%,var(--color-border));border-radius:var(--radius-md);background:linear-gradient(135deg,color-mix(in srgb,var(--color-text) 90%,#000),color-mix(in srgb,var(--color-primary) 30%,#111));color:#f7fbf8;font-family:"SFMono-Regular","Cascadia Code","Menlo",monospace;font-size:0.72rem;line-height:1.6;box-shadow:inset 0 1px 0 rgba(255,255,255,0.08)}
+.workflow-console{position:relative;z-index:2;margin-top:var(--space-4);padding:var(--space-3) var(--space-4);border:1px solid color-mix(in srgb,var(--color-primary) 18%,var(--color-border));border-radius:var(--radius-md);background:linear-gradient(135deg,color-mix(in srgb,var(--color-text) 90%,#000),color-mix(in srgb,var(--color-primary) 30%,#111));color:#f7fbf8;font-family:"SFMono-Regular","Cascadia Code","Menlo",monospace;font-size:0.72rem;line-height:1.6;box-shadow:inset 0 1px 0 rgba(255,255,255,0.08)}
 .workflow-console span,.workflow-console strong{display:block;font-weight:600}
 .workflow-console span{color:rgba(255,255,255,0.54)}
 .workflow-console strong{color:#d7efe9}
-.workflow-map{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-5);padding:var(--space-3) 0 var(--space-3) var(--space-3);isolation:isolate}
+.workflow-illustration{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;min-height:220px;margin:0;border:1px solid color-mix(in srgb,var(--color-primary) 14%,var(--color-border));border-radius:var(--radius-md);background:color-mix(in srgb,var(--color-surface) 72%,transparent);overflow:hidden}
+.workflow-illustration img{display:block;width:100%;height:auto;mix-blend-mode:multiply;transform:scale(1.04)}
+.workflow-map{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);padding:0;isolation:isolate}
 .workflow-map::before{content:"";position:absolute;inset:8% 6%;z-index:-1;background:
   linear-gradient(115deg,transparent 0 19%,color-mix(in srgb,var(--color-primary) 15%,transparent) 19.3%,transparent 20% 100%),
   linear-gradient(66deg,transparent 0 48%,color-mix(in srgb,var(--color-accent) 11%,transparent) 48.3%,transparent 49% 100%),
@@ -351,14 +366,12 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   opacity:0.72}
 .workflow-map::after{content:"";position:absolute;left:50%;top:48%;z-index:-1;width:5.5rem;height:5.5rem;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,color-mix(in srgb,var(--color-primary) 20%,transparent),transparent 64%);border:1px solid color-mix(in srgb,var(--color-primary) 22%,transparent);box-shadow:0 0 32px color-mix(in srgb,var(--color-primary) 15%,transparent);animation:card-breathe 6s ease-in-out infinite}
 .workflow-lane{position:relative;padding:var(--space-5);border:1px solid color-mix(in srgb,var(--lane-color,var(--color-primary)) 30%,var(--color-border));border-radius:var(--radius-lg);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 82%,transparent),color-mix(in srgb,var(--color-surface-2) 72%,transparent));box-shadow:0 14px 38px rgba(40,37,29,0.07);backdrop-filter:blur(10px);animation:flow-in 680ms var(--transition) both;animation-delay:calc(var(--lane-index,0)*110ms);overflow:hidden}
-.workflow-lane:nth-child(2){margin-top:var(--space-12)}
-.workflow-lane:nth-child(3){margin-top:calc(var(--space-3) * -1)}
-.workflow-lane:nth-child(4){margin-top:var(--space-8)}
+.workflow-lane:nth-child(2),.workflow-lane:nth-child(3),.workflow-lane:nth-child(4){margin-top:0}
 .workflow-lane::before{content:"";position:absolute;inset:auto var(--space-5) 0 var(--space-5);height:3px;border-radius:var(--radius-full);background:linear-gradient(90deg,var(--lane-color,var(--color-primary)),transparent);opacity:0.45;transition:opacity var(--transition),transform var(--transition)}
 .workflow-lane::after{content:"";position:absolute;right:-2.4rem;top:-2.4rem;width:7rem;height:7rem;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lane-color,var(--color-primary)) 18%,transparent),transparent 62%);opacity:0.8}
 .workflow-lane:hover{transform:translateY(-4px);box-shadow:0 18px 48px color-mix(in srgb,var(--lane-color,var(--color-primary)) 14%,transparent);border-color:color-mix(in srgb,var(--lane-color,var(--color-primary)) 46%,var(--color-border))}
 .workflow-lane:hover::before{opacity:1}
-.workflow-flow{position:relative;z-index:2;display:grid;grid-template-columns:1fr;gap:0.62rem;align-items:start}
+.workflow-flow{position:relative;z-index:2;display:grid;grid-template-columns:1fr;gap:var(--space-3);align-items:start}
 .workflow-start,.workflow-end{position:relative;z-index:2;min-width:0}
 .workflow-start{padding-bottom:var(--space-3);border-bottom:1px solid color-mix(in srgb,var(--lane-color,var(--color-primary)) 18%,transparent)}
 .workflow-end{margin-top:var(--space-2);padding:var(--space-3) var(--space-4);border:1px solid color-mix(in srgb,var(--lane-color,var(--color-primary)) 24%,var(--color-border));border-radius:var(--radius-md);background:linear-gradient(135deg,color-mix(in srgb,var(--lane-color,var(--color-primary)) 12%,var(--color-surface-2)),color-mix(in srgb,var(--color-surface-2) 86%,transparent))}
@@ -367,14 +380,18 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
 .workflow-index{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin-bottom:var(--space-3);border-radius:var(--radius-full);background:var(--lane-color,var(--color-primary));color:#fff;font-size:0.74rem;font-weight:800;box-shadow:0 0 0 6px color-mix(in srgb,var(--lane-color,var(--color-primary)) 12%,transparent)}
 .workflow-title{font-family:var(--font-body);font-size:var(--text-sm);font-weight:800;color:var(--color-text);line-height:1.25;margin-bottom:var(--space-2)}
 .workflow-desc,.workflow-output-text{font-size:0.76rem;color:var(--color-text-muted);line-height:1.55}
-.workflow-step{position:relative;min-height:0;padding:0.68rem 0.75rem 0.68rem 1rem;border-left:2px solid color-mix(in srgb,var(--lane-color,var(--color-primary)) 42%,transparent);border-radius:0 var(--radius-md) var(--radius-md) 0;background:color-mix(in srgb,var(--color-surface) 66%,transparent);transition:transform var(--transition),background var(--transition);animation:card-breathe 5.8s ease-in-out infinite;animation-delay:calc(var(--lane-index,0)*420ms);min-width:0}
+.workflow-steps{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2);min-width:0}
+.workflow-steps::before{content:"";position:absolute;left:5%;right:5%;top:0.62rem;height:1px;background:linear-gradient(90deg,transparent,var(--lane-color,var(--color-primary)),transparent);opacity:0.3}
+.workflow-step{position:relative;min-height:116px;padding:var(--space-4) var(--space-3) var(--space-3);border-top:2px solid color-mix(in srgb,var(--lane-color,var(--color-primary)) 42%,transparent);border-radius:var(--radius-md);background:color-mix(in srgb,var(--color-surface) 66%,transparent);transition:transform var(--transition),background var(--transition);animation:card-breathe 5.8s ease-in-out infinite;animation-delay:calc(var(--lane-index,0)*420ms);min-width:0}
+.workflow-step-index{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:1.2rem;height:1.2rem;margin-bottom:var(--space-2);border-radius:var(--radius-full);background:color-mix(in srgb,var(--lane-color,var(--color-primary)) 16%,var(--color-surface));color:var(--lane-color,var(--color-primary));font-size:0.62rem;font-weight:800;line-height:1;text-align:center;font-variant-numeric:tabular-nums}
 .workflow-step strong{display:block;font-size:0.76rem;color:var(--lane-color,var(--color-primary));margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.04em}
 .workflow-step span{display:block;font-size:0.76rem;color:var(--color-text-muted);line-height:1.45}
+.workflow-step .workflow-step-index{display:flex;align-items:center;justify-content:center;line-height:1;text-align:center}
 .workflow-arrow{position:relative;z-index:2;display:flex;align-items:center;justify-content:flex-start;min-height:8px;padding-left:1.42rem;color:transparent;font-size:0;animation:arrow-flow-y 1.9s ease-in-out infinite;animation-delay:calc(var(--lane-index,0)*180ms)}
 .workflow-arrow::before{content:"";position:absolute;left:1.52rem;top:-0.65rem;width:1px;height:1.8rem;background:linear-gradient(180deg,transparent,var(--lane-color,var(--color-primary)),transparent);opacity:0.42}
 .workflow-arrow::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--lane-color,var(--color-primary));box-shadow:0 0 0 5px color-mix(in srgb,var(--lane-color,var(--color-primary)) 12%,transparent)}
-.workflow-output{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
-.workflow-output-card{position:relative;min-height:112px;padding:var(--space-5);border:1px solid color-mix(in srgb,var(--color-primary) 14%,var(--color-border));border-radius:var(--radius-md);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 82%,transparent),color-mix(in srgb,var(--color-surface-2) 70%,transparent));box-shadow:var(--shadow-sm);backdrop-filter:blur(10px);transition:transform var(--transition),box-shadow var(--transition);overflow:hidden}
+.workflow-output{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-2)}
+.workflow-output-card{position:relative;min-height:92px;padding:var(--space-4);border:1px solid color-mix(in srgb,var(--color-primary) 14%,var(--color-border));border-radius:var(--radius-md);background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 82%,transparent),color-mix(in srgb,var(--color-surface-2) 70%,transparent));box-shadow:var(--shadow-sm);backdrop-filter:blur(10px);transition:transform var(--transition),box-shadow var(--transition);overflow:hidden}
 .workflow-output-card::after{content:"";position:absolute;right:-1.8rem;bottom:-1.8rem;width:4.8rem;height:4.8rem;border-radius:50%;background:color-mix(in srgb,var(--color-primary) 8%,transparent)}
 .workflow-output-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .workflow-output-card strong{display:block;font-family:var(--font-display);font-size:var(--text-lg);line-height:1;color:var(--color-primary);margin-bottom:var(--space-2)}
@@ -391,6 +408,8 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   .hero-tags{justify-content:center}
   .hero-contact{justify-content:center}
   .workstation-panel,.communication-grid,.system-shell{grid-template-columns:1fr}
+  .communication-feature-layout{grid-template-columns:1fr;gap:var(--space-5);min-height:0}
+  .communication-qr{justify-self:center;width:174px}
   .signal-grid{grid-template-columns:1fr}
   .nav-inner{padding-inline:var(--space-4)}
   .nav-links{display:flex}
@@ -420,17 +439,18 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   .system-nodes{position:relative;z-index:3;display:flex;flex-direction:column;gap:var(--space-4);width:100%;align-items:center}
   .system-node{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:min(260px,100%);transform:none;animation:none}
   .system-node::before{display:none}
-  .workflow-header{padding:var(--space-5)}
+  .workflow-left{display:grid;gap:var(--space-4)}
+  .workflow-header{grid-template-columns:1fr;padding:var(--space-5)}
   .workflow-header::after{width:7rem;height:7rem}
   .workflow-console{font-size:0.68rem}
+  .workflow-illustration{min-height:0}
   .workflow-map{grid-template-columns:1fr;padding:0}
   .workflow-map::before,.workflow-map::after{display:none}
   .workflow-lane,.workflow-lane:nth-child(2),.workflow-lane:nth-child(3),.workflow-lane:nth-child(4){grid-template-columns:1fr;padding:var(--space-4);margin-top:0}
   .workflow-lane::before{display:none}
   .workflow-flow{grid-template-columns:1fr;gap:var(--space-3)}
-  .workflow-arrow{min-height:22px;font-size:0;color:transparent;transform:none}
-  .workflow-arrow::after{content:"↓";font-size:1rem;color:var(--lane-color,var(--color-primary));animation:arrow-flow 1.9s ease-in-out infinite}
-  .workflow-arrow::before{left:calc(50% - 1px);right:auto;top:-12px;bottom:-12px;width:1px;height:auto;background:linear-gradient(180deg,transparent,var(--lane-color,var(--color-primary)),transparent)}
+  .workflow-steps{grid-template-columns:1fr;gap:var(--space-2)}
+  .workflow-steps::before{display:none}
   .workflow-output{grid-template-columns:1fr}
 }
 @media(max-width:460px){
@@ -592,10 +612,15 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
     </div>
     <div class="contrib-summary" data-render="contribStats"></div>
     <div class="contrib-layout">
-      <article class="contrib-panel">
-        <h3 class="contrib-panel-title" data-i18n="openSource.typesTitle"></h3>
-        <div class="contrib-types" data-render="contribTypes"></div>
-      </article>
+      <div class="contrib-side">
+        <article class="contrib-panel">
+          <h3 class="contrib-panel-title" data-i18n="openSource.typesTitle"></h3>
+          <div class="contrib-types" data-render="contribTypes"></div>
+        </article>
+        <figure class="contrib-illustration" aria-label="Open-source contribution workbench">
+          <img src="assets/open-source-contributions/01-github-workbench.png" alt="Japanese hand-drawn open-source contribution workbench with GitHub and medical AI project clues" loading="lazy">
+        </figure>
+      </div>
       <article class="contrib-panel">
         <h3 class="contrib-panel-title" data-i18n="openSource.reposTitle"></h3>
         <div class="repo-list" data-render="contribRepos"></div>
@@ -639,13 +664,18 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
       <div class="system-grid-bg" aria-hidden="true"></div>
       <div class="workflow-left">
         <div class="workflow-header">
-          <p class="workflow-eyebrow" data-i18n="system.canvasLabel"></p>
-          <h3 data-i18n="system.canvasTitle"></h3>
-          <p data-i18n="system.canvasDesc"></p>
-          <div class="workflow-console" aria-hidden="true">
-            <span>anita@clinical-ai ~ zsh</span>
-            <strong>$ run loops --clinical --agent --sleep</strong>
+          <div class="workflow-header-copy">
+            <p class="workflow-eyebrow" data-i18n="system.canvasLabel"></p>
+            <h3 data-i18n="system.canvasTitle"></h3>
+            <p data-i18n="system.canvasDesc"></p>
+            <div class="workflow-console" aria-hidden="true">
+              <span>anita@clinical-ai ~ zsh</span>
+              <strong>$ run loops --clinical --agent --sleep</strong>
+            </div>
           </div>
+          <figure class="workflow-illustration">
+            <img src="assets/anita-clinical-ai-os-map.png" alt="Clinical AI workflow mechanism map" loading="lazy">
+          </figure>
         </div>
         <div class="workflow-output" data-render="systemOutputs"></div>
       </div>
@@ -695,7 +725,7 @@ const content={
       name:'Lixin Yin',
       role:'Anesthesiologist & Medical AI Researcher',
       institution:"Jiangyin People's Hospital, Jiangsu, China",
-      tags:['Anesthesiology','Medical AI','Deep Learning','Clinical Decision Support','Bioinformatics','Sleep Magician'],
+      tags:['Anesthesiology','Medical AI','Deep Learning','Clinical Decision Support','AI Workflows','Sleep Magician'],
       bio:'I am an anesthesiologist at Jiangyin People\'s Hospital with a strong interest in applying AI to perioperative medicine and clinical care. My work connects bedside clinical questions with practical AI systems: Kaggle life-science competitions, sleep management, anesthesia safety, medical dataset tooling, and AI-agent workflows for research and care delivery.',
       email:'Email Me',
       launchDone:'Workspace unlocked · Scroll to enter',
@@ -717,14 +747,14 @@ const content={
       signals:[
         {value:'3',label:'Kaggle medals',desc:'Life-science competitions translated into clinical AI practice.'},
         {value:'31',label:'Merged PRs',desc:'Small, verifiable contributions across high-star open source projects.'},
-        {value:'AI+Health',label:'Project lane',desc:'Anesthesia safety, sleep management, and medical education systems.'},
-        {value:'Sleep Magician',label:'Public channel',desc:'Sleep health communication and AI-assisted patient education.'}
+        {value:'AI+Health',label:'Project lane',desc:'Clinical AI, agent workflows, medical education, and public communication.'},
+        {value:'Sleep Magician',label:'Public channel',desc:'AI workflows, healthcare technology, and practical public education.'}
       ]
     },
-    portfolio:{label:'Evidence Portfolio',title:'A clinical AI practice built from competitions, systems, teaching, and public health communication'},
+    portfolio:{label:'Evidence Portfolio',title:'A clinical AI practice connecting competitions, healthcare systems, AI workflows, teaching, and public communication'},
     competitions:{label:'International Competitions',title:'Kaggle Competition Honors'},
     awards:{label:'National & Regional Recognition',title:'Awards & Projects'},
-    communication:{label:'Content & Public Health Communication',title:'Sleep Health Communication'},
+    communication:{label:'AI Workflows & Healthcare Communication',title:'Practical AI for Healthcare and Learning'},
     projects:{label:'Owned GitHub Work',title:'GitHub Projects',link:'View Repository',site:'Live Website',repo:'GitHub',stars:'stars'},
     openSource:{
       label:'Open Source Contributions',
@@ -750,7 +780,7 @@ const content={
       {badge:'3rd Prize',title:'2025 National Smart Medical Insurance Competition',project:'Medical Insurance Value Compass (Agent Edition)',meta:"Organizer: National Healthcare Security Administration · Team: Datapower · Jiangyin People's Hospital",desc:'Built an agent-style view of medical-insurance value assessment for healthcare decision support.'}
     ],
     communicationList:[
-      {name:'Sleep Magician',role:'WeChat public account',desc:'A public-facing sleep health channel focused on sleep management, stress recovery, perioperative health, and AI-assisted health education.',tags:['Sleep Health','Public Communication','Perioperative Recovery','AI Education'],metrics:[{value:'Public',label:'Health communication channel'},{value:'Sleep',label:'Long-term clinical theme'},{value:'AI',label:'Education and workflow experiments'}]}
+      {name:'Sleep Magician',role:'WeChat public account',desc:'A clinician-led public channel that explains AI workflows, agent systems, medical AI, and health education in plain language—with sleep and perioperative health as clinical anchors.',tags:['AI Workflows','Medical AI','Healthcare Education','Public Communication'],qrLabel:'Scan to follow on WeChat',qrAlt:'WeChat QR code for Sleep Magician',metrics:[{value:'AI',label:'Workflows and agent practice'},{value:'Health',label:'Clinician-led medical context'},{value:'Learn',label:'Guides, courses, and explainers'}]}
     ],
     projectsList:[
       {name:'AI and Anesthesia Teaching Courseware',stars:3,url:'https://github.com/2023Anita/anesthesia-teaching-courseware',siteUrl:'https://2023anita.github.io/anesthesia-teaching-courseware/',image:'assets/ai-anesthesia-teaching-courseware.png',imageAlt:'AI and Anesthesia Teaching Courseware website preview',desc:'A bilingual, visual anesthesia teaching website for Cornell first-year students and early medical learners, created through a clinician-led, AI-assisted workflow.',tags:['Anesthesiology','Medical Education','AI Courseware','GitHub Pages']},
@@ -800,11 +830,11 @@ const content={
     system:{
       label:'Personal Operating System',
       title:'Anita Clinical AI OS',
-      desc:'A map of the recurring loops behind my clinical, research, teaching, open-source, and public-health work.',
+      desc:'A map of recurring loops connecting my clinical work, research, AI workflows, teaching, open source, and public communication.',
       core:'Clinical AI Workstation',
       canvasLabel:'Workflow Map',
       canvasTitle:'From clinical signal to reusable AI work',
-      canvasDesc:'My OS is less a static identity map and more a repeatable loop: clinical questions become datasets, models, agents, teaching material, open-source fixes, and public sleep-health communication.',
+      canvasDesc:'My OS is less a static identity map and more a repeatable loop: clinical questions become datasets, models, agent procedures, teaching assets, open-source fixes, and public-facing explainers, then return to real-world validation.',
       nodes:[
         {name:'Perioperative Medicine',desc:'Clinical anesthesia, monitoring, and safety questions from the bedside.',color:'#01696f'},
         {name:'Anesthesia Safety',desc:'Risk warning, decision support, and quality-control scenarios.',color:'#0f766e'},
@@ -813,19 +843,19 @@ const content={
         {name:'AI Agent Workflows',desc:'Codex, research assistants, and repeatable clinical AI procedures.',color:'#5c6f33'},
         {name:'Medical Education',desc:'Anesthesia courseware and beginner-friendly clinical visualization.',color:'#9a5f3d'},
         {name:'Open Source PRs',desc:'Reliability fixes and documentation improvements in high-star projects.',color:'#50606a'},
-        {name:'Sleep Magician',desc:'A WeChat channel connecting sleep health, public education, and AI.',color:'#b35a28'}
+        {name:'Sleep Magician',desc:'A WeChat channel connecting AI workflows, healthcare technology, and public education.',color:'#b35a28'}
       ],
       workflows:[
         {title:'Clinical question loop',source:'Bedside signal',desc:'Anesthesia monitoring, perioperative safety, and sleep recovery questions.',color:'#01696f',steps:[{label:'Frame',text:'Translate bedside uncertainty into a computable question.'},{label:'Model',text:'Use structured data, imaging, or agent workflows to test it.'},{label:'Review',text:'Return to clinical safety, explainability, and practical use.'}],output:'Decision support / quality-control prototype'},
         {title:'Competition to clinic loop',source:'Kaggle lab',desc:'Life-science modeling practice becomes a reusable evaluation habit.',color:'#2f5f9f',steps:[{label:'Benchmark',text:'Build against public tasks and measurable leaderboards.'},{label:'Extract',text:'Keep reusable modeling, validation, and error-analysis patterns.'},{label:'Transfer',text:'Apply the patterns to clinical AI and medical education systems.'}],output:'Robust modeling playbooks'},
         {title:'Agent workflow loop',source:'Codex workspace',desc:'Repeatable research, writing, review, and implementation workflows.',color:'#5c6f33',steps:[{label:'Specify',text:'Define boundaries, evidence, and testable outputs.'},{label:'Automate',text:'Create local agent procedures, skills, and guardrails.'},{label:'Verify',text:'Check links, tests, citations, and deployment state before claiming.'}],output:'Reusable AI operating procedures'},
-        {title:'Public health communication loop',source:'Sleep Magician',desc:'Sleep-health communication connects clinical experience with public education.',color:'#b35a28',steps:[{label:'Observe',text:'Collect common sleep, recovery, and perioperative concerns.'},{label:'Explain',text:'Turn them into clear public-facing health education.'},{label:'Iterate',text:'Use feedback to improve content, tools, and teaching material.'}],output:'Sleep health articles and education assets'}
+        {title:'AI & healthcare communication loop',source:'Sleep Magician',desc:'Translate AI workflows, healthcare technology, and clinical lessons into public-facing explainers and practical guides.',color:'#b35a28',steps:[{label:'Observe',text:'Track recurring questions from clinical work, AI tools, and readers.'},{label:'Explain',text:'Turn complex systems into clear guides, articles, and courses.'},{label:'Iterate',text:'Use feedback and verification to improve content and workflows.'}],output:'AI and health education assets'}
       ],
       outputs:[
         {value:'Clinical',label:'safer perioperative decisions'},
         {value:'Research',label:'validated modeling habits'},
         {value:'Teaching',label:'beginner-friendly courseware'},
-        {value:'Public',label:'Sleep Magician communication'}
+        {value:'Public',label:'AI & healthcare communication'}
       ]
     }
   },
@@ -836,7 +866,7 @@ const content={
       name:'殷利鑫',
       role:'麻醉医生 / 医疗人工智能实践者',
       institution:'江阴市人民医院，江苏，中国',
-      tags:['麻醉学','医疗 AI','深度学习','临床决策支持','生物信息学','睡眠魔法师'],
+      tags:['麻醉学','医疗 AI','深度学习','临床决策支持','AI 工作流','睡眠魔法师'],
       bio:'我是江阴市人民医院麻醉科医生，长期关注人工智能在围术期医学、临床照护和医学科研中的实际应用。我的工作重点是把一线临床问题转化为可计算、可验证、可复盘的 AI 系统，包括 Kaggle 生命科学竞赛、睡眠管理、麻醉安全、医疗数据集工具和 AI Agent 科研工作流。',
       email:'给我发邮件',
       launchDone:'工作站已打开 · 向下进入正文',
@@ -858,14 +888,14 @@ const content={
       signals:[
         {value:'3',label:'Kaggle 奖牌',desc:'把生命科学竞赛经验转化为临床 AI 实践。'},
         {value:'31',label:'已合并 PR',desc:'在高星开源项目中持续提交小范围、可验证贡献。'},
-        {value:'AI+医疗',label:'项目主线',desc:'麻醉安全、睡眠管理与医学教学系统。'},
-        {value:'睡眠魔法师',label:'公众内容',desc:'睡眠健康科普与 AI 辅助健康教育。'}
+        {value:'AI+医疗',label:'项目主线',desc:'临床 AI、Agent 工作流、医学教学与健康传播。'},
+        {value:'睡眠魔法师',label:'公众内容',desc:'用通俗语言解释 AI 工作方式、医疗科技与健康教育。'}
       ]
     },
-    portfolio:{label:'Evidence Portfolio',title:'由竞赛、系统、教学和健康传播组成的临床 AI 实践证据'},
+    portfolio:{label:'Evidence Portfolio',title:'连接竞赛、医疗系统、AI 工作流、教学与公众传播的临床 AI 实践'},
     competitions:{label:'国际竞赛',title:'Kaggle 竞赛荣誉'},
     awards:{label:'国家与区域成果',title:'奖项与项目'},
-    communication:{label:'内容与健康传播',title:'睡眠健康科普'},
+    communication:{label:'AI 工作方式与医疗健康传播',title:'面向医护与学习者的 AI 实践分享'},
     projects:{label:'个人 GitHub 作品',title:'GitHub 代表项目',link:'查看仓库',site:'访问网站',repo:'GitHub',stars:'stars'},
     openSource:{
       label:'开源贡献',
@@ -891,7 +921,7 @@ const content={
       {badge:'三等奖',title:'2025 全国智慧医保大赛',project:'医保价值罗盘（Agent 版）',meta:'主办方：国家医疗保障局 · Datapower 团队 · 江阴市人民医院',desc:'以智能体方式呈现医保价值评估视角，服务医疗决策支持。'}
     ],
     communicationList:[
-      {name:'睡眠魔法师',role:'微信公众号主理人',desc:'面向大众的睡眠健康科普公众号，关注睡眠管理、压力恢复、围术期健康与 AI 辅助健康教育。',tags:['睡眠健康','医学科普','围术期恢复','AI 健康教育'],metrics:[{value:'公众',label:'健康传播渠道'},{value:'睡眠',label:'长期临床主题'},{value:'AI',label:'教育与工作流实验'}]}
+      {name:'睡眠魔法师',role:'微信公众号主理人',desc:'以临床经验为底，把 AI 工作流、Agent、医疗 AI、医学教学和健康问题讲成普通人能理解、能实践的内容；睡眠与围术期健康仍是重要的临床锚点。',tags:['AI 工作流','医疗 AI','医学教学','公众传播'],qrLabel:'扫码关注公众号',qrAlt:'睡眠魔法师微信公众号二维码',metrics:[{value:'AI',label:'工作流与 Agent 实践'},{value:'医疗',label:'医生视角的真实场景'},{value:'学习',label:'教程、课程与通俗解读'}]}
     ],
     projectsList:[
       {name:'AI and Anesthesia Teaching Courseware',stars:3,url:'https://github.com/2023Anita/anesthesia-teaching-courseware',siteUrl:'https://2023anita.github.io/anesthesia-teaching-courseware/',image:'assets/ai-anesthesia-teaching-courseware.png',imageAlt:'AI and Anesthesia Teaching Courseware 网站截图',desc:'面向康奈尔大一学生和医学初学者的中英双语麻醉见习课件网站，结合临床带教、AI 辅助内容生成、医学可视化与 GitHub Pages 发布。',tags:['麻醉学','医学教育','AI 课件','GitHub Pages']},
@@ -941,11 +971,11 @@ const content={
     system:{
       label:'个人操作系统',
       title:'Anita Clinical AI OS',
-      desc:'把我的临床、科研、教学、开源和公众健康传播工作放在同一张图里，展示长期可复用的工作循环。',
+      desc:'把我的临床、科研、AI 工作流、教学、开源和公众号内容放在同一张图里，展示长期可复用的工作循环。',
       core:'临床 AI 工作站',
       canvasLabel:'Workflow Map',
       canvasTitle:'从临床信号到可复用 AI 工作',
-      canvasDesc:'这个 OS 不只是身份标签，而是一套循环：临床问题进入数据、模型、Agent、教学、开源修复和睡眠健康科普，再回到真实场景验证。',
+      canvasDesc:'这个 OS 不只是身份标签，而是一套循环：临床问题进入数据、模型、Agent、教学、开源修复和面向公众的解释性内容，再回到真实场景验证。',
       nodes:[
         {name:'围术期医学',desc:'来自临床一线的麻醉管理、监测与安全问题。',color:'#01696f'},
         {name:'麻醉安全',desc:'风险预警、临床决策支持与质量控制场景。',color:'#0f766e'},
@@ -954,19 +984,19 @@ const content={
         {name:'AI Agent 工作流',desc:'Codex、科研助手和可复盘的临床 AI 流程。',color:'#5c6f33'},
         {name:'医学教学',desc:'麻醉课件、初学者友好的临床可视化内容。',color:'#9a5f3d'},
         {name:'开源 PR',desc:'在高星项目中做可靠性修复和文档质量改进。',color:'#50606a'},
-        {name:'睡眠魔法师',desc:'连接睡眠健康、医学科普和 AI 辅助健康教育。',color:'#b35a28'}
+        {name:'睡眠魔法师',desc:'连接 AI 工作流、医疗科技、医学科普和面向公众的教育。',color:'#b35a28'}
       ],
       workflows:[
         {title:'临床问题循环',source:'一线临床信号',desc:'来自麻醉监测、围术期安全和睡眠恢复管理的问题。',color:'#01696f',steps:[{label:'定义',text:'把床旁不确定性转成可计算的问题。'},{label:'建模',text:'用结构化数据、影像或 Agent 工作流做验证。'},{label:'回看',text:'回到临床安全、可解释性和真实可用性。'}],output:'临床决策支持 / 质控预警原型'},
         {title:'竞赛到临床循环',source:'Kaggle 实验场',desc:'把生命科学竞赛经验沉淀成可迁移的评估习惯。',color:'#2f5f9f',steps:[{label:'基准',text:'在公开任务和可量化 leaderboard 中训练。'},{label:'抽取',text:'保留建模、验证和错误分析的可复用模式。'},{label:'迁移',text:'迁移到临床 AI、医学教学和数据工具。'}],output:'稳健建模与验证 playbook'},
         {title:'Agent 工作流循环',source:'Codex 工作台',desc:'把科研、写作、审阅和实现流程变成可复盘步骤。',color:'#5c6f33',steps:[{label:'规格化',text:'定义边界、证据来源和可测试输出。'},{label:'自动化',text:'形成本地 agent 流程、skill 和安全约束。'},{label:'验证',text:'在声明完成前检查链接、测试、引用和发布状态。'}],output:'可复用 AI 操作规程'},
-        {title:'公众健康传播循环',source:'睡眠魔法师',desc:'把临床经验、睡眠健康和 AI 辅助教育连接起来。',color:'#b35a28',steps:[{label:'观察',text:'收集常见睡眠、恢复和围术期健康问题。'},{label:'解释',text:'转化成大众能理解、能行动的健康科普。'},{label:'迭代',text:'用反馈改进文章、工具和医学教学素材。'}],output:'睡眠健康文章与教育资产'}
+        {title:'AI 与医疗传播循环',source:'睡眠魔法师',desc:'把 AI 工作流、医疗科技和临床经验转化为面向公众的解释与实践指南。',color:'#b35a28',steps:[{label:'观察',text:'收集临床工作、AI 工具和读者反复出现的问题。'},{label:'解释',text:'把复杂系统转化成清晰的文章、教程和课程。'},{label:'迭代',text:'用反馈与验证结果改进内容和工作流。'}],output:'AI 与健康教育资产'}
       ],
       outputs:[
         {value:'临床',label:'更安全的围术期决策'},
         {value:'科研',label:'可验证的建模习惯'},
         {value:'教学',label:'初学者友好的医学课件'},
-        {value:'公众',label:'睡眠魔法师健康传播'}
+        {value:'公众',label:'AI 与医疗健康传播'}
       ]
     }
   },
@@ -977,7 +1007,7 @@ const content={
       name:'殷 利鑫',
       role:'麻酔科医 / 医療 AI 実践者',
       institution:'江陰市人民医院（中国・江蘇省）',
-      tags:['麻酔学','医療 AI','深層学習','臨床意思決定支援','バイオインフォマティクス','睡眠魔法師'],
+      tags:['麻酔学','医療 AI','深層学習','臨床意思決定支援','AI ワークフロー','睡眠魔法師'],
       bio:'江陰市人民医院の麻酔科医として、周術期医療、臨床ケア、医学研究における AI 活用に取り組んでいます。臨床現場の課題を、計算可能で検証可能な AI システムへ落とし込むことを重視し、Kaggle の生命科学コンペ、睡眠管理、麻酔安全、医療データセット基盤、AI Agent による研究ワークフローを実践しています。',
       email:'メールする',
       launchDone:'Workspace unlocked · 下へ進む',
@@ -999,14 +1029,14 @@ const content={
       signals:[
         {value:'3',label:'Kaggle メダル',desc:'生命科学コンペの経験を臨床 AI 実践へ接続。'},
         {value:'31',label:'Merged PRs',desc:'高スター OSS への小さく検証可能な継続貢献。'},
-        {value:'AI+医療',label:'プロジェクト軸',desc:'麻酔安全、睡眠管理、医学教育システム。'},
-        {value:'睡眠魔法師',label:'発信チャンネル',desc:'睡眠健康と AI 支援ヘルス教育の発信。'}
+        {value:'AI+医療',label:'プロジェクト軸',desc:'臨床 AI、Agent ワークフロー、医学教育、健康発信。'},
+        {value:'睡眠魔法師',label:'発信チャンネル',desc:'AI の働き方、医療テクノロジー、健康教育をわかりやすく発信。'}
       ]
     },
-    portfolio:{label:'Evidence Portfolio',title:'コンペ、システム、教育、健康発信から構成される臨床 AI 実践'},
+    portfolio:{label:'Evidence Portfolio',title:'コンペ、医療システム、AI ワークフロー、教育、健康発信をつなぐ臨床 AI 実践'},
     competitions:{label:'国際コンペティション',title:'Kaggle 受賞歴'},
     awards:{label:'国内・地域での評価',title:'受賞とプロジェクト'},
-    communication:{label:'Content & Public Health Communication',title:'睡眠健康コミュニケーション'},
+    communication:{label:'AI ワークフローと医療コミュニケーション',title:'医療と学びのための実践的 AI'},
     projects:{label:'個人 GitHub 作品',title:'GitHub 代表プロジェクト',link:'リポジトリを見る',site:'サイトを見る',repo:'GitHub',stars:'stars'},
     openSource:{
       label:'Open Source Contributions',
@@ -1032,7 +1062,7 @@ const content={
       {badge:'三等賞',title:'2025 全国スマート医療保険コンテスト',project:'Medical Insurance Value Compass（Agent 版）',meta:'主催：国家医療保障局 · Team Datapower · 江陰市人民医院',desc:'医療保険価値評価を Agent 形式で整理し、医療意思決定支援に活用する視点を示しました。'}
     ],
     communicationList:[
-      {name:'睡眠魔法師',role:'WeChat 公式アカウント運営',desc:'一般向けの睡眠健康コミュニケーションチャンネル。睡眠管理、ストレス回復、周術期健康、AI 支援による健康教育を扱います。',tags:['睡眠健康','医学コミュニケーション','周術期回復','AI 健康教育'],metrics:[{value:'Public',label:'健康発信チャンネル'},{value:'Sleep',label:'長期的な臨床テーマ'},{value:'AI',label:'教育とワークフロー実験'}]}
+      {name:'睡眠魔法師',role:'WeChat 公式アカウント運営',desc:'臨床経験を土台に、AI ワークフロー、Agent、医療 AI、医学教育、健康課題をわかりやすく実践的に伝えるチャンネル。睡眠と周術期健康は重要な臨床アンカーです。',tags:['AI ワークフロー','医療 AI','医学教育','パブリック発信'],qrLabel:'WeChatでフォロー',qrAlt:'睡眠魔法師 WeChat QRコード',metrics:[{value:'AI',label:'ワークフローと Agent 実践'},{value:'Health',label:'臨床医の視点'},{value:'Learn',label:'ガイド、教材、解説'}]}
     ],
     projectsList:[
       {name:'AI and Anesthesia Teaching Courseware',stars:3,url:'https://github.com/2023Anita/anesthesia-teaching-courseware',siteUrl:'https://2023anita.github.io/anesthesia-teaching-courseware/',image:'assets/ai-anesthesia-teaching-courseware.png',imageAlt:'AI and Anesthesia Teaching Courseware website preview',desc:'Cornell の一年生と医学初学者向けに作成した、英中バイリンガルの麻酔見学コースウェア。臨床医主導の教育と AI 支援による教材設計を組み合わせています。',tags:['麻酔学','医学教育','AI 教材','GitHub Pages']},
@@ -1082,11 +1112,11 @@ const content={
     system:{
       label:'Personal Operating System',
       title:'Anita Clinical AI OS',
-      desc:'臨床、研究、教育、OSS、パブリックヘルス発信を一つの地図として整理したワークシステムです。',
+      desc:'臨床、研究、AI ワークフロー、教育、OSS、公式アカウント発信を一つの地図として整理したワークシステムです。',
       core:'Clinical AI Workstation',
       canvasLabel:'Workflow Map',
       canvasTitle:'臨床シグナルから再利用可能な AI ワークへ',
-      canvasDesc:'この OS は静的な自己紹介ではなく、臨床課題をデータ、モデル、Agent、教育、OSS 修正、睡眠健康コミュニケーションへつなぐ反復ループです。',
+      canvasDesc:'この OS は静的な自己紹介ではなく、臨床課題をデータ、モデル、Agent、教育、OSS 修正、一般向けの解説へつなぎ、現場で検証する反復ループです。',
       nodes:[
         {name:'周術期医学',desc:'臨床現場から生まれる麻酔管理、モニタリング、安全課題。',color:'#01696f'},
         {name:'麻酔安全',desc:'リスク警告、意思決定支援、品質管理のシナリオ。',color:'#0f766e'},
@@ -1095,19 +1125,19 @@ const content={
         {name:'AI Agent ワークフロー',desc:'Codex、研究アシスタント、再現可能な臨床 AI 手順。',color:'#5c6f33'},
         {name:'医学教育',desc:'麻酔コースウェアと初学者向け臨床ビジュアライゼーション。',color:'#9a5f3d'},
         {name:'OSS PR',desc:'高スター OSS への信頼性修正と文書品質改善。',color:'#50606a'},
-        {name:'睡眠魔法師',desc:'睡眠健康、医学発信、AI 支援健康教育をつなぐチャンネル。',color:'#b35a28'}
+        {name:'睡眠魔法師',desc:'AI ワークフロー、医療テクノロジー、医学発信をつなぐチャンネル。',color:'#b35a28'}
       ],
       workflows:[
         {title:'臨床課題ループ',source:'Bedside signal',desc:'麻酔モニタリング、周術期安全、睡眠回復から生まれる問い。',color:'#01696f',steps:[{label:'Frame',text:'臨床の不確実性を計算可能な問いへ変換。'},{label:'Model',text:'構造化データ、画像、Agent ワークフローで検証。'},{label:'Review',text:'安全性、説明可能性、実用性へ戻して評価。'}],output:'意思決定支援 / 品質管理プロトタイプ'},
         {title:'コンペから臨床へ',source:'Kaggle lab',desc:'生命科学コンペで得た経験を再利用可能な評価習慣へ。',color:'#2f5f9f',steps:[{label:'Benchmark',text:'公開タスクと測定可能な leaderboard で訓練。'},{label:'Extract',text:'モデリング、検証、エラー分析の型を抽出。'},{label:'Transfer',text:'臨床 AI、医学教育、データ基盤へ転用。'}],output:'堅牢なモデリング playbook'},
         {title:'Agent ワークフロー',source:'Codex workspace',desc:'研究、執筆、レビュー、実装を再現可能な手順へ。',color:'#5c6f33',steps:[{label:'Specify',text:'境界、根拠、テスト可能な成果物を定義。'},{label:'Automate',text:'ローカル Agent 手順、skill、安全制約を整備。'},{label:'Verify',text:'完了前にリンク、テスト、引用、公開状態を確認。'}],output:'再利用可能な AI 操作手順'},
-        {title:'公衆健康発信ループ',source:'睡眠魔法師',desc:'睡眠健康、臨床経験、AI 支援教育を結びます。',color:'#b35a28',steps:[{label:'Observe',text:'睡眠、回復、周術期健康のよくある悩みを整理。'},{label:'Explain',text:'一般向けに理解しやすく行動可能な内容へ。'},{label:'Iterate',text:'反応をもとに記事、ツール、教材を改善。'}],output:'睡眠健康記事と教育素材'}
+        {title:'AI と医療の発信ループ',source:'睡眠魔法師',desc:'AI ワークフロー、医療テクノロジー、臨床経験を実践的な解説へ変換。',color:'#b35a28',steps:[{label:'Observe',text:'臨床、AI ツール、読者から繰り返し出る問いを整理。'},{label:'Explain',text:'複雑なシステムを明快な記事、ガイド、教材へ。'},{label:'Iterate',text:'反応と検証結果をもとに内容とワークフローを改善。'}],output:'AI と健康教育の素材'}
       ],
       outputs:[
         {value:'Clinical',label:'より安全な周術期意思決定'},
         {value:'Research',label:'検証可能なモデリング習慣'},
         {value:'Teaching',label:'初学者向け医学教材'},
-        {value:'Public',label:'睡眠魔法師の健康発信'}
+        {value:'Public',label:'AI と医療の健康発信'}
       ]
     }
   }
@@ -1168,10 +1198,18 @@ function render(lang){
     </article>`).join('');
   document.querySelector('[data-render="communication"]').innerHTML=c.communicationList.map(item=>`
     <article class="communication-card featured">
-      <h3 class="communication-name">${escapeHtml(item.name)}</h3>
-      <p class="communication-role">${escapeHtml(item.role)}</p>
-      <p class="communication-desc">${escapeHtml(item.desc)}</p>
-      <div class="communication-tags">${item.tags.map(tag=>`<span class="communication-tag">${escapeHtml(tag)}</span>`).join('')}</div>
+      <div class="communication-feature-layout">
+        <div class="communication-copy">
+          <h3 class="communication-name">${escapeHtml(item.name)}</h3>
+          <p class="communication-role">${escapeHtml(item.role)}</p>
+          <p class="communication-desc">${escapeHtml(item.desc)}</p>
+          <div class="communication-tags">${item.tags.map(tag=>`<span class="communication-tag">${escapeHtml(tag)}</span>`).join('')}</div>
+        </div>
+        <a class="communication-qr" href="assets/sleep-magician-qr.png" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(item.qrLabel)}">
+          <img src="assets/sleep-magician-qr.png" alt="${escapeHtml(item.qrAlt)}" loading="lazy">
+          <span class="communication-qr-label">${escapeHtml(item.qrLabel)}</span>
+        </a>
+      </div>
     </article>
     <div class="communication-metrics">
       ${item.metrics.map(metric=>`
@@ -1245,9 +1283,9 @@ function render(lang){
   document.querySelector('[data-render="systemLayers"]').innerHTML=c.system.workflows.map(item=>`
     <div class="system-layer" style="--node-color:${escapeHtml(item.color)}">${escapeHtml(item.title)}</div>`).join('');
   document.querySelector('[data-render="systemWorkflows"]').innerHTML=c.system.workflows.map((item,index)=>{
-    const stepMarkup=item.steps.map(step=>`
-      <span class="workflow-arrow" aria-hidden="true">→</span>
+    const stepMarkup=item.steps.map((step,stepIndex)=>`
       <div class="workflow-step workflow-card">
+        <span class="workflow-step-index" aria-hidden="true">${stepIndex+1}</span>
         <strong>${escapeHtml(step.label)}</strong>
         <span>${escapeHtml(step.text)}</span>
       </div>`).join('');
@@ -1259,8 +1297,7 @@ function render(lang){
         <h3 class="workflow-title">${escapeHtml(item.title)}</h3>
         <p class="workflow-desc"><strong>${escapeHtml(item.source)}</strong><br>${escapeHtml(item.desc)}</p>
       </div>
-      ${stepMarkup}
-      <span class="workflow-arrow" aria-hidden="true">→</span>
+      <div class="workflow-steps">${stepMarkup}</div>
       <div class="workflow-end workflow-card">
         <span class="workflow-index">OUT</span>
         <h3 class="workflow-title">${escapeHtml(item.output)}</h3>
