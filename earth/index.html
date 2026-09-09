@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN" data-page="earth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050a0f">
+  <meta name="description" content="一段穿越 45.4 亿年地球与生命演化的交互式时间旅程。">
+  <title>earth. / 地球与生命</title>
+  <link rel="stylesheet" href="../fonts.css">
+  <link rel="stylesheet" href="earth.css">
+</head>
+<body>
+  <main id="earth-app">
+    <header class="earth-header" aria-label="Earth navigation">
+      <a class="earth-brand" href="../" target="_parent" aria-label="返回主页">
+        <span class="brand-mark" data-ui="brand">earth.</span>
+        <span class="brand-divider" aria-hidden="true">/</span>
+        <span class="brand-subtitle" data-ui="subtitle">地球与生命</span>
+      </a>
+
+      <div class="header-actions">
+        <button id="sources-open" class="text-link" type="button" aria-haspopup="dialog">
+          <span data-ui="sources">资料来源</span>
+        </button>
+        <a class="text-link" href="../#contact" target="_parent">
+          <span data-ui="contact">联系 Anita</span>
+        </a>
+      </div>
+    </header>
+
+    <section id="journey" class="journey-stage" aria-labelledby="era-title">
+      <div class="stage-noise" aria-hidden="true"></div>
+      <div class="stage-grid" aria-hidden="true"></div>
+      <div class="orbit-decoration orbit-decoration-one" aria-hidden="true"></div>
+      <div class="orbit-decoration orbit-decoration-two" aria-hidden="true"></div>
+
+      <div id="globe" class="globe" role="img" aria-label="可旋转的地球三维视图">
+        <div class="globe-fallback" aria-hidden="true"></div>
+        <div id="loading" class="loading-state" role="status" aria-live="polite">
+          <span class="loading-dot" aria-hidden="true"></span>
+          <span data-ui="journey">正在加载地球…</span>
+        </div>
+      </div>
+
+      <div class="journey-copy">
+        <p class="eyebrow">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          <span data-ui="journey">穿越 45.4 亿年的地球与生命</span>
+        </p>
+        <p id="era-label" class="era-label" aria-live="polite">现在 · 当下</p>
+        <h1 id="era-title">我们共同的行星。</h1>
+        <p id="era-description">从第一片海洋到今天的云层，沿着地球的时间轴，观察生命如何在一个不断变化的世界里留下痕迹。</p>
+        <p class="orbit-hint">
+          <span class="hint-rule" aria-hidden="true"></span>
+          <span data-ui="orbitHint">拖动地球以旋转 · 滚轮缩放</span>
+        </p>
+      </div>
+
+      <aside class="era-stamp" aria-live="polite">
+        <span id="era-kind" class="era-kind">摄影地球</span>
+        <span id="era-time" class="era-time">现在</span>
+        <span class="stamp-caption" data-ui="today">我们所处的此刻</span>
+      </aside>
+
+      <div class="journey-controls">
+        <div class="controls-main">
+          <div class="control-intro">
+            <span class="control-kicker" data-ui="journey">地球历史 · 时间旅程</span>
+            <span id="time-note" class="time-note" data-ui="timeNote">时间间隔并非线性；拖动以浏览 14 个关键节点</span>
+          </div>
+
+          <div class="playback-controls" role="group" aria-label="时间播放控制">
+            <button id="previous" class="control-button control-button-quiet" type="button" aria-label="上一个时代">
+              <span data-ui="previous">上一个</span>
+            </button>
+            <button id="play" class="control-button control-button-primary" type="button" aria-label="播放地球历史">
+              <span data-ui="play">播放旅程</span>
+            </button>
+            <button id="next" class="control-button control-button-quiet" type="button" aria-label="下一个时代">
+              <span data-ui="next">下一个</span>
+            </button>
+            <button id="speed" class="control-button speed-button" type="button" aria-label="调整播放速度">
+              <span data-ui="speed">速度</span>
+              <span id="speed-value">1×</span>
+            </button>
+            <button id="today" class="control-button today-button" type="button" aria-label="回到今天">
+              <span data-ui="today">回到今天</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="timeline-wrap">
+          <div class="timeline-line" aria-hidden="true"></div>
+          <label class="sr-only" for="timeline">地球历史时间轴</label>
+          <input id="timeline" type="range" min="0" max="13" value="13" step="1" aria-label="地球历史时间轴">
+          <div id="timeline-stops" class="timeline-stops" aria-live="polite"></div>
+        </div>
+
+        <div class="control-dock">
+          <div class="view-modes" role="group" aria-label="地球视图模式">
+            <button class="view-mode is-active" type="button" data-mode="natural" aria-pressed="true">
+              <span class="mode-glyph mode-glyph-globe" aria-hidden="true">◉</span>
+              <span data-ui="natural">自然</span>
+            </button>
+            <button class="view-mode" type="button" data-mode="night" aria-pressed="false">
+              <span class="mode-glyph" aria-hidden="true">◐</span>
+              <span data-ui="night">夜间</span>
+            </button>
+            <button class="view-mode" type="button" data-mode="blue" aria-pressed="false">
+              <span class="mode-glyph" aria-hidden="true">✧</span>
+              <span data-ui="blue">蓝色时刻</span>
+            </button>
+          </div>
+
+          <div class="scene-tools" role="group" aria-label="地球视图工具">
+            <button id="zoom-in" class="icon-button" type="button" aria-label="放大地球">
+              <span aria-hidden="true">＋</span>
+              <span class="sr-only" data-ui="zoomIn">放大</span>
+            </button>
+            <button id="zoom-out" class="icon-button" type="button" aria-label="缩小地球">
+              <span aria-hidden="true">−</span>
+              <span class="sr-only" data-ui="zoomOut">缩小</span>
+            </button>
+            <span class="tool-divider" aria-hidden="true"></span>
+            <button id="rotate" class="icon-button icon-button-label" type="button" aria-label="切换自动旋转">
+              <span class="tool-glyph" aria-hidden="true">↻</span>
+              <span class="sr-only" data-ui="rotate">旋转</span>
+            </button>
+            <button id="clouds" class="icon-button icon-button-label" type="button" aria-label="切换云层">
+              <span class="tool-glyph" aria-hidden="true">☁</span>
+              <span class="sr-only" data-ui="clouds">云层</span>
+            </button>
+            <button id="fullscreen" class="icon-button icon-button-label" type="button" aria-label="进入全屏">
+              <span class="tool-glyph fullscreen-glyph" aria-hidden="true">⛶</span>
+              <span class="sr-only" data-ui="fullscreen">全屏</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="life-detail" class="life-detail" aria-labelledby="life-title">
+      <article class="life-card">
+        <div id="life-icon" class="life-icon" aria-hidden="true"></div>
+        <div class="life-copy">
+          <p class="section-kicker" data-ui="detailLabel">节点详情 · 科学线索</p>
+          <h2 id="life-title">生命留下的第一道痕迹</h2>
+          <p id="life-description">每一个时间节点都连接着地质变化与生命演化。选择时间轴上的节点，查看这一段地球故事。</p>
+          <a id="life-evidence" class="life-evidence" href="https://science.nasa.gov/earth/facts/" target="_blank" rel="noopener noreferrer">探索科学证据 ↗</a>
+        </div>
+      </article>
+      <p class="science-note" data-ui="scienceNote">早期地球的形状与海陆分布为科学示意，并非精确的古地理复原。</p>
+    </section>
+
+    <dialog id="sources-dialog" aria-labelledby="sources-title">
+      <div class="dialog-shell">
+        <div class="dialog-heading">
+          <div>
+            <p class="section-kicker" data-ui="sources">资料来源</p>
+            <h2 id="sources-title">关于这段地球旅程</h2>
+          </div>
+          <button id="sources-close" class="dialog-close" type="button" aria-label="关闭资料来源">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only" data-ui="close">关闭</span>
+          </button>
+        </div>
+        <p class="dialog-intro">页面中的时间节点与说明参考以下公开资料；早期地球的视觉呈现是为教学与探索设计的科学示意。</p>
+        <ul class="source-list">
+          <li>
+            <span class="source-index">01</span>
+            <a href="https://science.nasa.gov/earth/facts/" target="_blank" rel="noopener noreferrer">NASA · Earth Facts ↗</a>
+          </li>
+          <li>
+            <span class="source-index">02</span>
+            <a href="https://ocean.si.edu/through-time/ocean-through-time" target="_blank" rel="noopener noreferrer">Smithsonian Ocean · Ocean Through Time ↗</a>
+          </li>
+          <li>
+            <span class="source-index">03</span>
+            <a href="https://naturalhistory.si.edu/education/teaching-resources/life-science/early-life-earth-animal-origins" target="_blank" rel="noopener noreferrer">Smithsonian National Museum of Natural History · Early Life on Earth ↗</a>
+          </li>
+          <li>
+            <span class="source-index">04</span>
+            <a href="https://humanorigins.si.edu/evidence/human-fossils/species/homo-sapiens" target="_blank" rel="noopener noreferrer">Smithsonian Human Origins · Homo sapiens ↗</a>
+          </li>
+        </ul>
+        <p class="dialog-credit">交互灵感来自 <a href="https://earth.ethanplus.ai/" target="_blank" rel="noopener noreferrer">earth.ethanplus.ai ↗</a>。本页为独立实现，未复制其代码。</p>
+      </div>
+    </dialog>
+  </main>
+
+  <script type="module" src="earth.js?v=20260909"></script>
+</body>
+</html>

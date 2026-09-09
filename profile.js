@@ -552,37 +552,6 @@ function render(lang){
       <h3 class="skill-cat">${escapeHtml(group.cat)}</h3>
       <div class="skill-items">${group.items.map(item=>`<span class="skill-item">${escapeHtml(item)}</span>`).join('')}</div>
     </article>`).join('');
-  document.querySelector('[data-render="systemLayers"]').innerHTML=c.system.workflows.map(item=>`
-    <div class="system-layer" style="--node-color:${escapeHtml(item.color)}">${escapeHtml(item.title)}</div>`).join('');
-  document.querySelector('[data-render="systemWorkflows"]').innerHTML=c.system.workflows.map((item,index)=>{
-    const stepMarkup=item.steps.map((step,stepIndex)=>`
-      <div class="workflow-step workflow-card">
-        <span class="workflow-step-index" aria-hidden="true">${stepIndex+1}</span>
-        <strong>${escapeHtml(step.label)}</strong>
-        <span>${escapeHtml(step.text)}</span>
-      </div>`).join('');
-    return `
-    <article class="workflow-lane" style="--lane-color:${escapeHtml(item.color)};--lane-index:${index}">
-      <div class="workflow-flow">
-      <div class="workflow-start workflow-card">
-        <span class="workflow-index">${String(index+1).padStart(2,'0')}</span>
-        <h3 class="workflow-title">${escapeHtml(item.title)}</h3>
-        <p class="workflow-desc"><strong>${escapeHtml(item.source)}</strong><br>${escapeHtml(item.desc)}</p>
-      </div>
-      <div class="workflow-steps">${stepMarkup}</div>
-      <div class="workflow-end workflow-card">
-        <span class="workflow-index">OUT</span>
-        <h3 class="workflow-title">${escapeHtml(item.output)}</h3>
-        <p class="workflow-output-text">${escapeHtml(item.title)}</p>
-      </div>
-      </div>
-    </article>`;
-  }).join('');
-  document.querySelector('[data-render="systemOutputs"]').innerHTML=c.system.outputs.map(item=>`
-    <article class="workflow-output-card">
-      <strong>${escapeHtml(item.value)}</strong>
-      <span>${escapeHtml(item.label)}</span>
-    </article>`).join('');
   document.querySelectorAll('.lang-btn').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===lang)));
   localStorage.setItem('preferred-language',lang);
   initCardTilt();

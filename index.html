@@ -651,37 +651,9 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
 </section>
 </main>
 
-<section id="system" class="workspace-page system-page" data-page="system">
-  <div class="system-particle-field" data-system-particles aria-hidden="true"></div>
-  <div class="system-shell">
-    <aside class="system-sidebar">
-      <p class="section-label" data-i18n="system.label"></p>
-      <h2 class="section-title" data-i18n="system.title"></h2>
-      <p class="system-desc" data-i18n="system.desc"></p>
-      <div class="system-layers" data-render="systemLayers"></div>
-    </aside>
-    <div class="system-canvas workflow-canvas" aria-label="Anita Clinical AI OS workflow map">
-      <div class="system-grid-bg" aria-hidden="true"></div>
-      <div class="workflow-left">
-        <div class="workflow-header">
-          <div class="workflow-header-copy">
-            <p class="workflow-eyebrow" data-i18n="system.canvasLabel"></p>
-            <h3 data-i18n="system.canvasTitle"></h3>
-            <p data-i18n="system.canvasDesc"></p>
-            <div class="workflow-console" aria-hidden="true">
-              <span>anita@clinical-ai ~ zsh</span>
-              <strong>$ run loops --clinical --agent --sleep</strong>
-            </div>
-          </div>
-          <figure class="workflow-illustration">
-            <img src="assets/anita-clinical-ai-os-map.png" alt="Clinical AI workflow mechanism map" loading="lazy">
-          </figure>
-        </div>
-        <div class="workflow-output" data-render="systemOutputs"></div>
-      </div>
-      <div class="workflow-map" data-render="systemWorkflows"></div>
-    </div>
-  </div>
+<section id="system" class="workspace-page earth-page" data-page="system">
+  <iframe id="earth-frame" title="地球与生命 · Earth & Life" data-src="earth/index.html" allow="fullscreen" style="display:block;width:100%;height:1300px;border:0;background:#050a0f"></iframe>
+  <noscript><a href="earth/index.html">探索地球与生命 / Explore Earth & Life</a></noscript>
 </section>
 
 <section id="contact" class="contact-section">
@@ -716,7 +688,8 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
 
 <footer data-i18n="footer"></footer>
 
-<script src="profile.js" defer></script>
+<script src="profile.js?v=earth20260909" defer></script>
 <script src="complete.js?v=handdrawn-v2" defer></script>
+<script src="earth-embed.js?v=20260909" defer></script>
 </body>
 </html>
