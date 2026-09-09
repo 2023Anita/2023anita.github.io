@@ -6,6 +6,8 @@ The six independent entry documents are `index.html`, `civilization.html`, `orbi
 
 The original application’s Sources dialogs retain its imagery and science citations. PALEOMAP terrain metadata specifies CC BY 4.0. Do not infer that every application file has that same license or remove original credits.
 
+Chinese, English and Japanese are selected with the header language control or `?lang=zh`, `?lang=en`, `?lang=ja`. Local translation dictionaries cover the six pages, their chapters, UI and source explanations. Satellite catalog identifiers and scientific proper names remain intact. The adapter preserves original English and stores the language locally; no translation service is contacted. The mobile context display uses a separate localized label to avoid competing with the original mobile renderer.
+
 The files `earth.js`, `earth.css`, `vendor/`, and the old `assets/earth-*` textures below are retained from the earlier independently written prototype for recovery; the six entry documents do not load them.
 
 ## Assets and sources

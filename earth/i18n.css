@@ -1,0 +1,13 @@
+.earth-language{position:fixed;left:180px;top:30px;display:flex;gap:2px;padding:3px;border:1px solid #52665d;border-radius:24px;background:#06100eea;z-index:90}
+.earth-language button{border:0;border-radius:18px;padding:6px 9px;background:transparent;color:#c2d1cb;font:12px/1.2 system-ui;cursor:pointer}
+.earth-language button[aria-pressed=true]{background:#d9e8df;color:#11221a}
+.earth-language button:focus-visible{outline:2px solid #8fe1c5;outline-offset:2px}
+.portfolio-return{left:340px}
+.mobile-context{font-size:0!important}
+.mobile-context::after{content:attr(data-localized-context);font-size:12px}
+html:lang(zh) body,html:lang(ja) body{font-family:Manrope,'PingFang SC','Hiragino Kaku Gothic ProN','Microsoft YaHei',system-ui,sans-serif}
+html:lang(zh) .hero h1,html:lang(ja) .hero h1{font-size:clamp(38px,4.3vw,66px);line-height:1.25;letter-spacing:-.025em}
+html:lang(zh) .hero p,html:lang(ja) .hero p{line-height:1.8}
+html:lang(zh) .micro,html:lang(ja) .micro,html:lang(zh) .eyebrow,html:lang(ja) .eyebrow{letter-spacing:.08em}
+html:lang(zh) .era-stops strong,html:lang(ja) .era-stops strong{font-size:10px}
+@media(max-width:760px){.earth-language{left:128px;top:25px}.earth-language button{font-size:10px;padding:5px 6px}.portfolio-return{left:20px;top:88px}html:lang(zh) .mobile-observatory .hero h1,html:lang(ja) .mobile-observatory .hero h1{font-size:27px;line-height:1.3}}
