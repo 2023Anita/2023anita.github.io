@@ -30,4 +30,27 @@
   .contact-links{gap:14px}
   .contact-link{font-size:14px}
 }
-@media(prefers-reduced-motion:reduce){.hero-grid,.contact-inner{transform:none;transition:none}.contact-link,.hero-contact .btn-primary{transition:none}.contact-link:not(.contact-static):hover,.hero-contact .btn-primary:hover{transform:none}}
+/* Raised console and instrument tiles share the surrounding ivory/teal palette. */
+.workstation-panel{gap:24px;padding:8px 0 18px;perspective:1400px}
+.workstation-panel .terminal-card,.workstation-panel .signal-grid{min-width:0;transform:perspective(1400px) rotateX(var(--depth-x,0deg)) rotateY(var(--depth-y,0deg));transition:transform .35s ease}
+.workstation-panel .terminal-card{position:relative;border-radius:22px;border:1px solid #648982;background:radial-gradient(ellipse at 0 0,#234a46,transparent 70%),linear-gradient(145deg,#163330,#102523);box-shadow:inset 0 1px 0 #ffffff30,0 5px 0 #304c47,0 7px 0 #75928a,0 24px 35px -18px #102e3866}
+.workstation-panel .terminal-card::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:repeating-linear-gradient(0deg,transparent 0 4px,#a2dfce04 4px 5px)}
+.workstation-panel .terminal-bar{padding:16px 20px;background:#ffffff08;border-bottom:1px solid #b5ddd226;box-shadow:0 1px 0 #00000024}
+.workstation-panel .terminal-bar strong{color:#bdd3cd;font-weight:500}
+.workstation-panel .terminal-bar span{box-shadow:0 0 9px currentColor;color:#b25c37}
+.workstation-panel .terminal-bar span:nth-child(2){color:#d8a331}
+.workstation-panel .terminal-bar span:nth-child(3){background:#79c7b8;color:#79c7b8;animation:workstation-status 3s ease-in-out infinite}
+.workstation-panel .terminal-lines{padding:26px 22px;color:#e6f1ed;overflow-wrap:anywhere;line-height:1.85}
+.workstation-panel .terminal-prompt{color:#91dfce;text-shadow:0 0 18px #91dfce24}
+.workstation-panel .terminal-output{color:#c0d1cc}
+.workstation-panel .terminal-cursor{background:#91dfce;box-shadow:0 0 10px #91dfce66}
+.workstation-panel .signal-grid{gap:20px}
+.workstation-panel .signal-card{border-radius:20px;border:1px solid color-mix(in srgb,var(--color-primary) 19%,var(--color-surface));background:radial-gradient(ellipse at 100% 0,color-mix(in srgb,var(--color-primary) 9%,transparent),transparent 65%),var(--color-surface);box-shadow:inset 0 1px 0 #ffffff65,0 4px 0 color-mix(in srgb,var(--color-primary) 18%,var(--color-surface)),0 6px 0 color-mix(in srgb,var(--color-primary) 26%,var(--color-surface)),0 16px 24px -17px #102e3866;transition:transform .3s ease,box-shadow .3s ease;padding:24px 20px}
+.workstation-panel .signal-card::before{bottom:14px;height:3px;border-radius:3px;opacity:.65}
+.workstation-panel .signal-card::after{content:"";position:absolute;right:-20px;top:-20px;width:74px;height:74px;border-radius:50%;border:1px solid color-mix(in srgb,var(--color-primary) 12%,transparent);box-shadow:0 0 0 12px color-mix(in srgb,var(--color-primary) 3%,transparent);pointer-events:none}
+.workstation-panel .signal-value{position:relative;z-index:1;line-height:1.18;text-shadow:0 2px 0 color-mix(in srgb,var(--color-primary) 12%,transparent);overflow-wrap:anywhere}
+.workstation-panel .signal-desc{line-height:1.75;margin-bottom:16px}
+@media(hover:hover) and (pointer:fine){.workstation-panel .signal-card:hover{transform:translateY(-5px);box-shadow:inset 0 1px 0 #ffffff65,0 5px 0 color-mix(in srgb,var(--color-primary) 20%,var(--color-surface)),0 22px 28px -15px #102e3855}}
+@keyframes workstation-status{50%{box-shadow:0 0 3px #79c7b8;opacity:.65}}
+@media(max-width:760px){.workstation-panel{gap:24px}.workstation-panel .signal-grid{gap:16px}.workstation-panel .signal-card{padding:22px 16px}.workstation-panel .terminal-lines{padding:24px 20px}}
+@media(prefers-reduced-motion:reduce){.hero-grid,.contact-inner,.workstation-panel .terminal-card,.workstation-panel .signal-grid,.workstation-panel .signal-card:hover{transform:none;transition:none}.workstation-panel .terminal-bar span{animation:none}.contact-link,.hero-contact .btn-primary,.workstation-panel .signal-card{transition:none}.contact-link:not(.contact-static):hover,.hero-contact .btn-primary:hover{transform:none}}

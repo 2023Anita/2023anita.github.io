@@ -1,7 +1,7 @@
 // Small pointer-led movement; touch and reduced-motion retain static depth.
 (() => {
   const motion = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
-  document.querySelectorAll('.hero-grid, .contact-inner').forEach(panel => {
+  document.querySelectorAll('.hero-grid, .contact-inner, .workstation-panel .terminal-card, .workstation-panel .signal-grid').forEach(panel => {
     const reset = () => {
       panel.style.removeProperty('--depth-x');
       panel.style.removeProperty('--depth-y');
