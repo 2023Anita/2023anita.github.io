@@ -74,6 +74,10 @@ nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--color-b
 
 .js-ready .workspace-page{display:none}
 .js-ready .workspace-page.active{display:block}
+.earth-page{background:#06090d}
+#earth-frame{height:900px}
+body.earth-active #contact,body.earth-active>footer{display:none}
+body.earth-active #earth-frame{height:calc(100dvh - var(--earth-nav-height,70px));min-height:540px}
 
 .launch-stage{position:relative;min-height:calc(100dvh - 64px);max-width:var(--content-default);margin:0 auto;padding:clamp(var(--space-12),7vw,var(--space-20)) var(--space-6) var(--space-10);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-8);overflow:hidden}
 .launch-stage::before{content:"";position:absolute;inset:var(--space-8) var(--space-6);z-index:-1;background:
@@ -652,8 +656,8 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
 </main>
 
 <section id="system" class="workspace-page earth-page" data-page="system">
-  <iframe id="earth-frame" title="地球与生命 · Earth & Life" data-src="earth/index.html" allow="fullscreen" style="display:block;width:100%;height:1300px;border:0;background:#050a0f"></iframe>
-  <noscript><a href="earth/index.html">探索地球与生命 / Explore Earth & Life</a></noscript>
+  <iframe id="earth-frame" title="EARTH — The making of home · Ethan Plus" data-src="https://earth.ethanplus.ai/" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin" style="display:block;width:100%;border:0;background:#06090d"></iframe>
+  <noscript><a href="https://earth.ethanplus.ai/">探索 EARTH 完整原站 / Explore the original EARTH</a></noscript>
 </section>
 
 <section id="contact" class="contact-section">
@@ -688,8 +692,8 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
 
 <footer data-i18n="footer"></footer>
 
-<script src="profile.js?v=earth20260909" defer></script>
+<script src="profile.js?v=original-earth20260909" defer></script>
 <script src="complete.js?v=handdrawn-v2" defer></script>
-<script src="earth-embed.js?v=20260909" defer></script>
+<script src="earth-embed.js?v=original-earth-20260909" defer></script>
 </body>
 </html>

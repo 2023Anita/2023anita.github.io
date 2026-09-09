@@ -808,7 +808,7 @@ function currentWorkspacePage(){
 
 function syncActivePage(targetId){
   const id=targetId||(location.hash||'#about').slice(1)||'about';
-  const page=id==='contact'?currentWorkspacePage():(pageByHash[id]||'about');
+  const page=id==='contact'?(currentWorkspacePage()==='system'?'about':currentWorkspacePage()):(pageByHash[id]||'about');
   document.querySelectorAll('.workspace-page').forEach(section=>{
     section.classList.toggle('active',section.dataset.page===page);
   });
