@@ -5,20 +5,17 @@
 .honors-source{font-size:13px;color:var(--color-text-muted);text-underline-offset:4px}
 .honors-summary{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;padding:26px 0;color:var(--color-primary);font-size:16px}
 .honors-summary strong{letter-spacing:.04em}
-.honors-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-.honor-card{position:relative;min-width:0;padding:30px;border:1px solid var(--color-border);border-radius:22px;background:var(--color-surface);box-shadow:0 8px 26px #17333308;transition:transform .3s,box-shadow .3s;animation:honor-enter .7s both;animation-delay:var(--honor-delay)}
+.honors-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.honor-card{position:relative;min-width:0;padding:24px;border:1px solid var(--color-border);border-radius:22px;background:var(--color-surface);box-shadow:0 8px 26px #17333308;transition:transform .3s,box-shadow .3s;animation:honor-enter .7s both;animation-delay:var(--honor-delay)}
 .honor-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px #01696f14;border-color:#80a9aa}
-.honor-featured{grid-column:1/-1;display:grid;grid-template-columns:30% 1fr;align-items:center;gap:35px;padding:48px;background:radial-gradient(ellipse at 12% 50%,#b7d4d332,transparent 50%),var(--color-surface)}
 .honor-eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;color:var(--color-primary);margin:18px 0 10px}
 .honor-body h3{font-family:var(--font-body);font-size:22px;line-height:1.45;margin:0 0 8px}
-.honor-featured h3{font-size:clamp(25px,2.6vw,36px)}
 .honor-official{font-size:14px;line-height:1.6;color:var(--color-text-muted);margin:0;min-height:46px}
 .honor-score{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:18px 0}
 .honor-score strong{font-size:32px;line-height:1.25;font-variant-numeric:tabular-nums;color:var(--color-primary)}
 .honor-score small{font-size:17px;font-weight:500;color:var(--color-text-muted)}
 .honor-score span{display:block;font-size:12px;color:var(--color-text-muted);margin-top:5px}
 .honor-score>b{font-size:17px;color:var(--color-primary);background:#80afaa20;border-radius:30px;padding:8px 14px;white-space:nowrap}
-.honor-featured .honor-score strong{font-size:46px}
 .honor-desc{font-size:16px;line-height:1.8;color:var(--color-text-muted)}
 .honor-meta{font-size:13px;line-height:1.9;color:var(--color-text-muted);margin:16px 0}
 .honor-links{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;font-weight:600;color:var(--color-primary)}
@@ -28,11 +25,16 @@
 .honor-medal-face{height:100%;border-radius:50%;border:1px solid #64768388;background:linear-gradient(130deg,var(--metal-light),var(--metal-mid),var(--metal-light));display:flex;flex-direction:column;align-items:center;justify-content:center;color:#344551}
 .bronze .honor-medal-face{color:#66401e}
 .honor-medal-face span{font-size:8px;letter-spacing:.15em;font-weight:600}.honor-medal-face b{font-family:Georgia,serif;font-style:italic;font-size:33px;line-height:1.15}
-.honor-featured .honor-medal{width:clamp(160px,18vw,230px);height:clamp(160px,18vw,230px);padding:12px;margin:auto;animation:honor-float 7s ease-in-out infinite}
-.honor-featured .honor-medal-face b{font-size:100px}.honor-featured .honor-medal-face span{font-size:15px}
-.honor-featured .honor-medal:after{content:'';position:absolute;inset:-40%;background:linear-gradient(110deg,transparent 43%,#fff9 49%,transparent 56%);animation:honor-shine 9s ease-in-out infinite;pointer-events:none}
 #honor-certificate{border:0;border-radius:16px;padding:16px;background:var(--color-surface);color:var(--color-text);width:min(1100px,94vw);max-height:94vh;overflow:auto;box-shadow:0 30px 90px #0005}#honor-certificate::backdrop{background:#102021b8;backdrop-filter:blur(5px)}#honor-certificate form{text-align:right;margin-bottom:12px}#honor-certificate button{font:inherit;padding:10px 18px;border:1px solid var(--color-border);border-radius:30px;cursor:pointer;background:var(--color-surface);color:var(--color-text)}#honor-certificate img{display:block;width:100%;height:auto}.honor-original{display:inline-block;margin-top:12px;color:var(--color-primary)}
 @keyframes honor-float{50%{transform:translateY(-7px)}}@keyframes honor-shine{0%,65%{transform:translateX(-100%)}90%,100%{transform:translateX(100%)}}@keyframes honor-enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:900px){.honors-grid{grid-template-columns:1fr}.honor-featured{grid-template-columns:180px 1fr;padding:28px;gap:24px}.honor-card:not(.honor-featured){display:grid;grid-template-columns:78px 1fr;gap:24px}.honor-official{min-height:0}}
-@media(max-width:600px){.honor-featured{display:block;padding:26px}.honor-featured .honor-medal{width:150px;height:150px;animation:none;margin:4px auto 26px}.honor-featured .honor-medal-face b{font-size:68px}.honor-featured .honor-medal-face span{font-size:11px}.honor-card:not(.honor-featured){display:block;padding:24px}.honors-subtitle{font-size:18px}.honors-summary{font-size:14px}.honor-body h3{font-size:22px}}
-@media(prefers-reduced-motion:reduce){.honor-card,.honor-medal,.honor-featured .honor-medal,.honor-featured .honor-medal:after{animation:none!important;transition:none!important}.honor-card:hover{transform:none}}
+#competitions .section-inner{max-width:1280px}
+.honor-card{display:flex;flex-direction:column}
+.honor-body{display:flex;flex-direction:column;flex:1;min-width:0}
+.honor-body h3{font-size:21px;min-height:3em}
+.honor-official{min-height:90px}
+.honor-desc{flex:1}
+.honor-score{align-items:flex-start;flex-direction:column}
+.honor-medal:after{content:'';position:absolute;inset:-40%;background:linear-gradient(110deg,transparent 43%,#fff9 49%,transparent 56%);animation:honor-shine 9s ease-in-out infinite;pointer-events:none}
+@media(max-width:1100px){.honors-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.honor-official{min-height:68px}}
+@media(max-width:600px){.honors-grid{grid-template-columns:1fr}.honor-card{padding:24px}.honor-body h3,.honor-official{min-height:0}.honors-subtitle{font-size:18px}.honors-summary{font-size:14px}.honor-score{flex-direction:row;align-items:center}}
+@media(prefers-reduced-motion:reduce){.honor-card,.honor-medal,.honor-medal:after{animation:none!important;transition:none!important}.honor-card:hover{transform:none}}
