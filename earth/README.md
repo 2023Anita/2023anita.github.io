@@ -1,8 +1,12 @@
 # Earth & Life
 
-An independently implemented educational globe replacing the former Anita OS page. The visual reference is [EARTH by Ethan Plus](https://earth.ethanplus.ai/); this project does not copy or redistribute that site's application code or proprietary assets.
+Self-hosted static snapshot of the public [EARTH by Ethan Plus](https://earth.ethanplus.ai/) frontend, captured on 2026-09-09. The original frontend and its scientific source credits are preserved; this is not a claim that Anita authored the original application. Local integration rewrites runtime paths, disables original-host analytics, and adds a return link to the portfolio.
 
-Scope: the planet-history journey and life-evolution timeline. It is not a replica of the reference site's separate civilization, moon, orbital, earthquake or ocean-data applications.
+The six independent entry documents are `index.html`, `civilization.html`, `orbit.html`, `moon.html`, `restless.html`, and `oceans.html`. They serve all program, worker, texture, terrain, satellite, earthquake and current-field dependencies locally, without an iframe or a runtime request to the reference host. `source-manifest.json` records original asset hashes and snapshot provenance. All datasets are the reference snapshot, not live feeds.
+
+The original application’s Sources dialogs retain its imagery and science citations. PALEOMAP terrain metadata specifies CC BY 4.0. Do not infer that every application file has that same license or remove original credits.
+
+The files `earth.js`, `earth.css`, `vendor/`, and the old `assets/earth-*` textures below are retained from the earlier independently written prototype for recovery; the six entry documents do not load them.
 
 ## Assets and sources
 
@@ -16,4 +20,4 @@ Scope: the planet-history journey and life-evolution timeline. It is not a repli
 
 All dates are approximate. Timeline spacing is intentionally non-linear. Stage descriptions are educational summaries; ancient geography and organism icons are schematic.
 
-Run using any static HTTP server. No third-party network request is required for the globe at runtime. The parent page passes language and visibility messages only after same-origin and source validation.
+Serve from `/earth/` on the GitHub site, or rebuild path prefixes as `/profile/earth/` on the Academy. No third-party network request is required for the six applications at runtime. Links in Sources intentionally lead to the cited institutions. The portfolio's legacy `#system` URL redirects to the local entry document.
