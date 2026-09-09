@@ -465,6 +465,8 @@ footer{padding:var(--space-8) var(--space-6);text-align:center;font-size:var(--t
   .system-particle-field{display:none}
 }
 </style>
+<link rel="stylesheet" href="kaggle-honors.css?v=20260909">
+<script src="kaggle-honors.js?v=20260909"></script>
 </head>
 <body>
 <canvas class="ambient-canvas" data-ambient-canvas aria-hidden="true"></canvas>
@@ -745,7 +747,7 @@ const content={
         {prompt:'open sleep-magician.channel',output:'WeChat public account: Sleep Magician'}
       ],
       signals:[
-        {value:'3',label:'Kaggle medals',desc:'Life-science competitions translated into clinical AI practice.'},
+        {value:'4',label:'Kaggle medals',desc:'Life-science competitions translated into clinical AI practice.'},
         {value:'31',label:'Merged PRs',desc:'Small, verifiable contributions across high-star open source projects.'},
         {value:'AI+Health',label:'Project lane',desc:'Clinical AI, agent workflows, medical education, and public communication.'},
         {value:'Sleep Magician',label:'Public channel',desc:'AI workflows, healthcare technology, and practical public education.'}
@@ -886,7 +888,7 @@ const content={
         {prompt:'open sleep-magician.channel',output:'微信公众号：睡眠魔法师'}
       ],
       signals:[
-        {value:'3',label:'Kaggle 奖牌',desc:'把生命科学竞赛经验转化为临床 AI 实践。'},
+        {value:'4',label:'Kaggle 奖牌',desc:'把生命科学竞赛经验转化为临床 AI 实践。'},
         {value:'31',label:'已合并 PR',desc:'在高星开源项目中持续提交小范围、可验证贡献。'},
         {value:'AI+医疗',label:'项目主线',desc:'临床 AI、Agent 工作流、医学教学与健康传播。'},
         {value:'睡眠魔法师',label:'公众内容',desc:'用通俗语言解释 AI 工作方式、医疗科技与健康教育。'}
@@ -1027,7 +1029,7 @@ const content={
         {prompt:'open sleep-magician.channel',output:'WeChat 公式アカウント：睡眠魔法師'}
       ],
       signals:[
-        {value:'3',label:'Kaggle メダル',desc:'生命科学コンペの経験を臨床 AI 実践へ接続。'},
+        {value:'4',label:'Kaggle メダル',desc:'生命科学コンペの経験を臨床 AI 実践へ接続。'},
         {value:'31',label:'Merged PRs',desc:'高スター OSS への小さく検証可能な継続貢献。'},
         {value:'AI+医療',label:'プロジェクト軸',desc:'臨床 AI、Agent ワークフロー、医学教育、健康発信。'},
         {value:'睡眠魔法師',label:'発信チャンネル',desc:'AI の働き方、医療テクノロジー、健康教育をわかりやすく発信。'}
@@ -1176,17 +1178,7 @@ function render(lang){
       <div class="signal-label">${escapeHtml(item.label)}</div>
       <p class="signal-desc">${escapeHtml(item.desc)}</p>
     </article>`).join('');
-  document.querySelector('[data-render="competitions"]').innerHTML=c.medals.map(item=>`
-    <article class="medal-card tilt-card">
-      <div class="medal-header">
-        <div class="medal-icon medal-${escapeHtml(item.kind)}">${escapeHtml(item.icon)}</div>
-        <h3 class="medal-title">${escapeHtml(item.title)}</h3>
-      </div>
-      <p class="medal-rank">${escapeHtml(item.rank)}</p>
-      <p class="medal-org">${escapeHtml(item.org)}</p>
-      <p class="medal-desc">${escapeHtml(item.desc)}</p>
-      <p class="medal-date">${escapeHtml(item.date)}</p>
-    </article>`).join('');
+  renderKaggleHonors(lang);
   document.querySelector('[data-render="awards"]').innerHTML=c.awardsList.map(item=>`
     <article class="award-item">
       <span class="award-badge">${escapeHtml(item.badge)}</span>
