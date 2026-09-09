@@ -8,7 +8,7 @@ const content={
       role:'Anesthesiologist & Medical AI Researcher',
       institution:"Jiangyin People's Hospital, Jiangsu, China",
       tags:['Anesthesiology','Medical AI','Deep Learning','Clinical Decision Support','AI Workflows','Sleep Magician'],
-      bio:'I am an anesthesiologist at Jiangyin People\'s Hospital with a strong interest in applying AI to perioperative medicine and clinical care. My work connects bedside clinical questions with practical AI systems: Kaggle life-science competitions, sleep management, anesthesia safety, medical dataset tooling, and AI-agent workflows for research and care delivery.',
+      bio:'I start with clinical problems and build with code. I create AI tools, test research ideas, and turn knowledge into practice.',
       email:'Email Me',
       launchDone:'Workspace unlocked · Scroll to enter',
       launchLines:[
@@ -149,7 +149,7 @@ const content={
       role:'麻醉医生 / 医疗人工智能实践者',
       institution:'江阴市人民医院，江苏，中国',
       tags:['麻醉学','医疗 AI','深度学习','临床决策支持','AI 工作流','睡眠魔法师'],
-      bio:'我是江阴市人民医院麻醉科医生，长期关注人工智能在围术期医学、临床照护和医学科研中的实际应用。我的工作重点是把一线临床问题转化为可计算、可验证、可复盘的 AI 系统，包括 Kaggle 生命科学竞赛、睡眠管理、麻醉安全、医疗数据集工具和 AI Agent 科研工作流。',
+      bio:'从临床出发，用代码拓展医学的可能。构建 AI 工具，验证研究想法，让知识走向实践。',
       email:'给我发邮件',
       launchDone:'工作站已打开 · 向下进入正文',
       launchLines:[
@@ -290,7 +290,7 @@ const content={
       role:'麻酔科医 / 医療 AI 実践者',
       institution:'江陰市人民医院（中国・江蘇省）',
       tags:['麻酔学','医療 AI','深層学習','臨床意思決定支援','AI ワークフロー','睡眠魔法師'],
-      bio:'江陰市人民医院の麻酔科医として、周術期医療、臨床ケア、医学研究における AI 活用に取り組んでいます。臨床現場の課題を、計算可能で検証可能な AI システムへ落とし込むことを重視し、Kaggle の生命科学コンペ、睡眠管理、麻酔安全、医療データセット基盤、AI Agent による研究ワークフローを実践しています。',
+      bio:'臨床の課題から出発し、コードで医療の可能性を広げる。AI ツールをつくり、研究の着想を検証し、知識を実践につなげる。',
       email:'メールする',
       launchDone:'Workspace unlocked · 下へ進む',
       launchLines:[
