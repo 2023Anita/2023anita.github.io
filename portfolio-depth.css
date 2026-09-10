@@ -1,0 +1,19 @@
+/* Shared depth hierarchy; content and native disclosure behavior stay intact. */
+#portfolio{--folio-shadow:inset 0 1px 0 #ffffff65,0 4px 0 color-mix(in srgb,var(--color-primary) 13%,var(--color-surface)),0 6px 0 color-mix(in srgb,var(--color-primary) 20%,var(--color-surface)),0 18px 28px -23px #173f3a70}
+.complete-preview #portfolio :is(.honor-card,.award-item,.communication-card,.project-card,.contrib-stat,.contrib-panel,.appt-card,.skill-card,.communication-metric){border:1px solid color-mix(in srgb,var(--color-primary) 18%,var(--color-surface));border-radius:20px;background:linear-gradient(145deg,var(--color-surface-2),var(--color-surface));box-shadow:var(--folio-shadow);transition:box-shadow .3s ease,translate .3s ease}
+.complete-preview #portfolio :is(.projects-grid,.awards-list,.skills-grid,.appt-list,.communication-grid){gap:24px}
+.complete-preview #portfolio .section{border-top-color:color-mix(in srgb,var(--color-primary) 10%,transparent);padding-bottom:48px}
+.complete-preview #portfolio .section-label{display:inline-block;width:fit-content;padding:5px 12px;border:1px solid color-mix(in srgb,var(--color-primary) 13%,transparent);border-radius:20px;background:var(--color-primary-highlight);box-shadow:inset 0 1px 0 #ffffff50,0 2px 0 color-mix(in srgb,var(--color-primary) 16%,var(--color-surface));margin-bottom:14px}
+.complete-preview #portfolio .section-title{text-shadow:0 2px 0 color-mix(in srgb,var(--color-primary) 9%,transparent)}
+.complete-preview #portfolio :is(.art-frame,.contrib-illustration){padding:10px;border-radius:18px;border:1px solid var(--color-border);background:var(--color-surface);box-shadow:var(--folio-shadow)}
+.complete-preview #portfolio .art-frame img{border-radius:12px}
+.complete-preview #portfolio .repo-item{border-radius:12px;background:color-mix(in srgb,var(--color-primary) 3%,var(--color-surface));border:1px solid color-mix(in srgb,var(--color-primary) 10%,transparent);box-shadow:inset 0 1px 0 #ffffff40,0 2px 0 color-mix(in srgb,var(--color-primary) 10%,var(--color-surface))}
+.complete-preview #portfolio :is(.portfolio-rail a,.preview-controls button,.project-search button,.project-search select,.project-search input){box-shadow:inset 0 1px 0 #ffffff65,0 3px 0 color-mix(in srgb,var(--color-primary) 14%,var(--color-surface));border-color:color-mix(in srgb,var(--color-primary) 20%,var(--color-surface))}
+.complete-preview #portfolio .full-detail summary{padding:6px 0;min-height:32px;align-items:center}
+@media(hover:hover) and (pointer:fine){.complete-preview #portfolio :is(.honor-card,.award-item,.communication-card,.project-card,.appt-card,.skill-card):hover{translate:0 -4px;box-shadow:var(--folio-shadow),0 22px 30px -24px #17645b65}}
+.page-clover-garden{position:fixed!important;inset:0;z-index:2!important;pointer-events:none;overflow:hidden;contain:strict}
+.page-clover{position:absolute;left:var(--leaf-x);top:var(--leaf-y);width:var(--leaf-size);height:auto;opacity:.56;filter:drop-shadow(1px 3px 2px #28554622);animation:page-clover-drift var(--leaf-time) ease-in-out infinite;animation-delay:var(--leaf-delay);transform-origin:center}
+.page-clover-garden.paused .page-clover{animation-play-state:paused}
+@keyframes page-clover-drift{0%,100%{transform:translate3d(-4px,15px,0) rotate(-18deg)}50%{transform:translate3d(7px,-24px,0) rotate(24deg)}}
+@media(max-width:700px){.page-clover{width:18px;opacity:.4}.complete-preview #portfolio :is(.projects-grid,.awards-list,.skills-grid,.appt-list){gap:20px}}
+@media(prefers-reduced-motion:reduce){.page-clover{animation:none}.complete-preview #portfolio :is(.honor-card,.award-item,.communication-card,.project-card,.appt-card,.skill-card){transition:none;translate:none}}
