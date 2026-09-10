@@ -11,3 +11,12 @@
   document.addEventListener('visibilitychange',visibility);
   visibility();
 })();
+// Reveal each section once, while leaving content visible without JavaScript.
+(() => {
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+    if(!entry.isIntersecting)return;
+    entry.target.classList.add('folio-enter');observer.unobserve(entry.target);
+  }),{threshold:.08});
+  document.querySelectorAll('#portfolio .section-header').forEach(el=>observer.observe(el));
+})();

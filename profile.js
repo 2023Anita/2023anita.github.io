@@ -33,7 +33,7 @@ const content={
         {value:'Sleep Magician',label:'Public channel',desc:'AI workflows, healthcare technology, and practical public education.'}
       ]
     },
-    portfolio:{label:'Evidence Portfolio',title:'A clinical AI practice connecting competitions, healthcare systems, AI workflows, teaching, and public communication'},
+    portfolio:{label:'Evidence Portfolio',title:'Clinical questions. AI tools.',subtitle:'I build, test, and share medical AI. Explore my projects, competitions, and open-source contributions.'},
     competitions:{label:'International Competitions',title:'Kaggle Competition Honors'},
     awards:{label:'National & Regional Recognition',title:'Awards & Projects'},
     communication:{label:'AI Workflows & Healthcare Communication',title:'Practical AI for Healthcare and Learning'},
@@ -174,7 +174,7 @@ const content={
         {value:'睡眠魔法师',label:'公众内容',desc:'用通俗语言解释 AI 工作方式、医疗科技与健康教育。'}
       ]
     },
-    portfolio:{label:'Evidence Portfolio',title:'连接竞赛、医疗系统、AI 工作流、教学与公众传播的临床 AI 实践'},
+    portfolio:{label:'Evidence Portfolio',title:'从临床问题，到 AI 工具。',subtitle:'我构建、测试并分享医学 AI。这里是项目、竞赛与开源贡献。'},
     competitions:{label:'国际竞赛',title:'Kaggle 竞赛荣誉'},
     awards:{label:'国家与区域成果',title:'奖项与项目'},
     communication:{label:'AI 工作方式与医疗健康传播',title:'面向医护与学习者的 AI 实践分享'},
@@ -315,7 +315,7 @@ const content={
         {value:'睡眠魔法師',label:'発信チャンネル',desc:'AI の働き方、医療テクノロジー、健康教育をわかりやすく発信。'}
       ]
     },
-    portfolio:{label:'Evidence Portfolio',title:'コンペ、医療システム、AI ワークフロー、教育、健康発信をつなぐ臨床 AI 実践'},
+    portfolio:{label:'Evidence Portfolio',title:'臨床の問いから、AI ツールへ。',subtitle:'医療 AI をつくり、検証し、共有する。プロジェクト、コンペ、オープンソースへの貢献を紹介します。'},
     competitions:{label:'国際コンペティション',title:'Kaggle 受賞歴'},
     awards:{label:'国内・地域での評価',title:'受賞とプロジェクト'},
     communication:{label:'AI ワークフローと医療コミュニケーション',title:'医療と学びのための実践的 AI'},

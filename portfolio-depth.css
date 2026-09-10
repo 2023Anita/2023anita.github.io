@@ -17,3 +17,23 @@
 @keyframes page-clover-drift{0%,100%{transform:translate3d(-4px,15px,0) rotate(-18deg)}50%{transform:translate3d(7px,-24px,0) rotate(24deg)}}
 @media(max-width:700px){.page-clover{width:18px;opacity:.4}.complete-preview #portfolio :is(.projects-grid,.awards-list,.skills-grid,.appt-list){gap:20px}}
 @media(prefers-reduced-motion:reduce){.page-clover{animation:none}.complete-preview #portfolio :is(.honor-card,.award-item,.communication-card,.project-card,.appt-card,.skill-card){transition:none;translate:none}}
+/* A focused dark opening gives the long, light portfolio a clear starting point. */
+.complete-preview #portfolio .portfolio-hero{padding:42px 24px 48px;background:radial-gradient(ellipse at 95% 0%,#32675780,transparent 60%),linear-gradient(135deg,#152e2b,#0c211f);color:#f4f3e9;border:1px solid #60847750;border-radius:0 0 30px 30px;box-shadow:0 7px 0 #37534b,0 25px 35px -28px #16362c99;margin-bottom:24px}
+.complete-preview #portfolio .portfolio-hero .section-label{background:#9bcbb514;color:#b9d9cb;border-color:#9bcbb538;box-shadow:inset 0 1px 0 #ffffff16,0 2px 0 #081b1740}
+.complete-preview #portfolio .portfolio-hero .section-title{font-family:var(--font-body);font-weight:750;font-size:clamp(34px,5.2vw,68px);line-height:1.15;letter-spacing:-.035em;max-width:850px;color:#f4f3e9;text-shadow:0 4px 0 #071c1a30;text-wrap:balance;margin:12px 0 24px}
+.portfolio-subtitle{font-size:clamp(16px,1.8vw,20px);line-height:1.8;color:#b9cec4;max-width:45em}
+.portfolio-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:32px 0}
+.portfolio-fact{padding:20px;border-radius:16px;border:1px solid #a3c5b62e;background:linear-gradient(145deg,#9bcbb515,#9bcbb504);box-shadow:inset 0 1px 0 #ffffff12,0 4px 0 #071c1a38;min-width:0}
+.portfolio-fact strong{display:block;font:600 clamp(32px,4vw,48px)/1.1 var(--font-body);color:#b4dfca;margin-bottom:10px}
+.portfolio-fact span{font-size:13px;color:#d1ddd6;overflow-wrap:anywhere}
+.complete-preview #portfolio .portfolio-hero .portfolio-rail a,.complete-preview #portfolio .portfolio-hero .preview-controls button{color:#d9e8df;background:#203d36;border:1px solid #87b29e45;box-shadow:inset 0 1px 0 #ffffff13,0 3px 0 #091f1b;transition:background .25s ease,translate .25s ease}
+.complete-preview #portfolio .portfolio-hero .portfolio-rail a:hover{background:#305b4d;translate:0 -2px}
+.portfolio-hero .preview-controls{border-color:#9bcbb52e;margin-top:28px}
+.portfolio-hero .preview-label{color:#b4dfca}
+.portfolio-hero .preview-controls p{color:#b9cec4}
+.page-clover:nth-child(2){filter:blur(.7px) drop-shadow(1px 2px 2px #28554620);opacity:.28}
+.page-clover:nth-child(3){filter:blur(1px);opacity:.24}
+.page-clover:nth-child(4){scale:1.15;filter:drop-shadow(2px 5px 3px #28554635)}
+@media(prefers-reduced-motion:no-preference){.portfolio-fact{animation:fact-enter .7s both;animation-delay:var(--fact-delay)}.folio-enter{animation:fact-enter .65s both}}
+@keyframes fact-enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.portfolio-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.portfolio-fact{padding:16px}.complete-preview #portfolio .portfolio-hero{padding:30px 20px 36px}.portfolio-hero .preview-controls{align-items:flex-start}}
