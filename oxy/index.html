@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0f1f45">
+<title>氧的一生 · Life of O</title>
+<meta name="description" content="你是一个氧原子：弹出去，被更爱氧的元素抢走，看看这一生会变成什么。">
+<style>
+:root{--red:#e8413a;--ink:#1b2233;--mut:#6b7385;--paper:#fffaf2}
+[hidden]{display:none!important}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0b1530;font-family:ui-rounded,"SF Pro Rounded","PingFang SC","Noto Sans CJK SC","Noto Sans SC",system-ui,sans-serif;color:var(--ink);overscroll-behavior:none}
+#app{position:relative;height:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;background:#0f1f45;overflow:hidden}
+header{display:flex;align-items:flex-end;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;color:#fff}
+.brand b{font-size:22px;font-weight:900;letter-spacing:.02em}
+.brand b span{color:var(--red)}
+.brand small{display:block;font-size:10px;letter-spacing:.3em;opacity:.55;margin-top:2px}
+.meta{text-align:right;font-size:11px;line-height:1.5;opacity:.85}
+.meta button{background:rgba(255,255,255,.14);border:0;color:#fff;font:600 11px inherit;font-family:inherit;padding:3px 9px;border-radius:99px;margin-left:4px}
+#card{margin:0 12px 8px;background:var(--paper);border-radius:16px;padding:9px 14px 10px;display:grid;grid-template-columns:1fr auto;align-items:end;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+#card.pulse{animation:pulse .5s}
+@keyframes pulse{0%{transform:scale(1)}35%{transform:scale(1.035);box-shadow:0 0 0 4px rgba(232,65,58,.45)}100%{transform:scale(1)}}
+#card .lab{font-size:10px;color:var(--mut);font-weight:600}
+#formula{font-size:28px;font-weight:900;line-height:1.05;margin-right:8px}
+#fname{font-size:12px;color:var(--mut);font-weight:600}
+#where{grid-column:1/3;font-size:11px;color:var(--mut);margin-top:2px}
+#score{font-size:28px;font-weight:900;font-variant-numeric:tabular-nums;text-align:right;line-height:1.05}
+#stage{position:relative;flex:1;margin:0 0 0;border-radius:18px 18px 0 0;overflow:hidden}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+footer{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 4px);text-align:center;font-size:9px;color:rgba(255,255,255,.55);pointer-events:none}
+.sheet{position:absolute;inset:auto 10px 14px 10px;background:var(--paper);border-radius:22px;padding:18px 18px 16px;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+#intro h2{font-size:20px;font-weight:900;margin-bottom:8px}
+#intro p{font-size:14px;line-height:1.6;margin-bottom:6px}
+#intro p b{color:var(--red)}
+#introNote{font-size:11px;color:var(--mut);line-height:1.5;margin-top:8px;border-top:1px dashed #d8d0c4;padding-top:8px}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:12px;font:800 16px inherit;font-family:inherit;margin-top:12px;background:var(--red);color:#fff}
+.btn.ghost{background:#efe7da;color:var(--ink)}
+#end{position:absolute;inset:0;background:rgba(8,14,32,.55);display:flex;align-items:flex-end;opacity:0;transition:opacity .35s}
+#end.show{opacity:1}
+#end .sheet{position:relative;inset:auto;margin:0 10px 14px;width:100%;max-height:88%;overflow:auto;transform:translateY(30px);transition:transform .45s cubic-bezier(.2,1.4,.4,1)}
+#end.show .sheet{transform:none}
+#endH{font-size:12px;color:var(--mut);font-weight:700}
+#endF{font-size:46px;font-weight:900;line-height:1.1;margin-top:2px}
+#endT{font-size:22px;font-weight:900}
+#endD{font-size:13px;line-height:1.6;color:#3d465a;margin-top:4px}
+.rare{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:10px 12px;margin-top:12px;border:1px solid #eadfce}
+.rare .big{font-size:24px;font-weight:900;color:var(--red);min-width:64px}
+#rareT{font-weight:900;font-size:15px}
+#rareN{font-size:10px;color:var(--mut);line-height:1.4}
+#end[data-tier="0"] .rare{background:linear-gradient(90deg,#fff4c9,#fff);border-color:#f2c53d}
+#endScore{font-size:12px;color:var(--mut);margin-top:8px;font-weight:700}
+h4{font-size:11px;color:var(--mut);margin:12px 0 6px;letter-spacing:.04em}
+#route{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+#route span{background:#fff;border:1px solid #eadfce;border-radius:8px;padding:2px 7px;font-weight:800;font-size:13px}
+#route i{font-style:normal;color:var(--mut);font-size:11px}
+#log{list-style:none;font-size:12px;line-height:1.45}
+#log li{padding:6px 0;border-bottom:1px dashed #e4dacb}
+#log b{display:block;font-size:10px;color:var(--mut)}
+#log em{display:block;font-style:normal;color:var(--red);font-size:11px}
+#src{font-size:9px;color:var(--mut);margin-top:8px}
+.row{display:flex;gap:8px}.row .btn{flex:1}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand"><b id="t-title">氧的一生</b><small id="t-sub">LIFE OF O</small></div>
+    <div class="meta"><div><span id="t-course"></span> · <span id="t-best"></span></div><div style="margin-top:4px"><button id="helpBtn">?</button><button id="langBtn">EN</button></div></div>
+  </header>
+  <div id="card">
+    <div><div class="lab" id="t-now">现在的样子</div><div><span id="formula">O₂</span><span id="fname"></span></div></div>
+    <div><div class="lab" id="t-score" style="text-align:right">得分</div><div id="score">0</div></div>
+    <div id="where"></div>
+  </div>
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <footer><div id="sample"></div><div id="credit"></div></footer>
+    <div class="sheet" id="intro">
+      <h2 id="introH"></h2><div id="introP"></div><div id="introNote"></div>
+      <button class="btn" id="startBtn"></button>
+    </div>
+    <div id="end" hidden>
+      <div class="sheet">
+        <div id="endH"></div><div id="endF"></div><div id="endT"></div><div id="endD"></div>
+        <div class="rare"><div class="big" id="rareP"></div><div><div><span id="rareL"></span> · <span id="rareT"></span></div><div id="rareN"></div></div></div>
+        <div id="endScore"></div>
+        <h4 id="routeH"></h4><div id="route"></div>
+        <h4 id="logH"></h4><ul id="log"></ul>
+        <div class="row"><button class="btn ghost" id="shareBtn"></button><button class="btn" id="againBtn"></button></div>
+        <div id="src"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>// 氧的一生 · engine (no DOM). Deterministic: seeded course, fixed-step physics.
+(function (G) {
+  'use strict';
+  const W = 420;
+  const LAYERS = [
+    { key: 'sky', y0: 0, y1: 1300 },
+    { key: 'surface', y0: 1300, y1: 2700 },
+  ];
+  const WORLD_H = LAYERS[LAYERS.length - 1].y1;
+
+  // Standard Gibbs free energy of formation of each oxide at 298.15 K, per mol of O atoms
+  // (|ΔGf°| kJ/mol O). Source: CRC Handbook of Chemistry and Physics, "Standard Thermodynamic
+  // Properties of Chemical Substances" (NBS tables). Values rounded.
+  const ELEM = {
+    H:  { z: 1,  v: 237, oxide: 'H2O',   dg: -237.1, n: 1, col: '#e9eef5', ink: '#33404f' },
+    C:  { z: 6,  v: 197, oxide: 'CO2',   dg: -394.4, n: 2, col: '#4b4f57', ink: '#ffffff' },
+    S:  { z: 16, v: 150, oxide: 'SO2',   dg: -300.1, n: 2, col: '#f1d54a', ink: '#4a3d00' },
+    Ag: { z: 47, v: 11,  oxide: 'Ag2O',  dg: -11.2,  n: 1, col: '#c9ced6', ink: '#3b4250' },
+    Cu: { z: 29, v: 130, oxide: 'CuO',   dg: -129.7, n: 1, col: '#d98a5b', ink: '#ffffff' },
+    Pb: { z: 82, v: 189, oxide: 'PbO',   dg: -188.9, n: 1, col: '#8d93a6', ink: '#ffffff' },
+    Fe: { z: 26, v: 247, oxide: 'Fe2O3', dg: -742.2, n: 3, col: '#b5532f', ink: '#ffffff' },
+    Zn: { z: 30, v: 320, oxide: 'ZnO',   dg: -320.5, n: 1, col: '#9bb0c9', ink: '#ffffff' },
+    Na: { z: 11, v: 375, oxide: 'Na2O',  dg: -375.5, n: 1, col: '#b58ad6', ink: '#ffffff' },
+    Si: { z: 14, v: 428, oxide: 'SiO2',  dg: -856.3, n: 2, col: '#d8c08a', ink: '#4a3a12' },
+    Al: { z: 13, v: 527, oxide: 'Al2O3', dg: -1582.3,n: 3, col: '#a9b8c8', ink: '#ffffff' },
+    Mg: { z: 12, v: 569, oxide: 'MgO',   dg: -569.3, n: 1, col: '#6fbf73', ink: '#ffffff' },
+    Ca: { z: 20, v: 603, oxide: 'CaO',   dg: -603.3, n: 1, col: '#5aa7a0', ink: '#ffffff' },
+    N:  { z: 7,  inert: true, sym: 'N₂', col: '#cfe0f5', ink: '#4a6382' },
+    Ar: { z: 18, inert: true, col: '#e3d9f2', ink: '#6a5a86' },
+    Au: { z: 79, inert: true, col: '#f2c53d', ink: '#5a4300' },
+  };
+
+  // Forms the oxygen atom can be in. s = how tightly it is held (kJ per mol O, 0 = O2).
+  const FORM = {
+    O2:    { s: 0,    f: 'O₂',      partner: ['O'] },
+    O3:    { s: -163, f: 'O₃',      partner: ['O', 'O'] },        // ΔGf°(O3,g) = +163.2 kJ/mol
+    H2O:   { s: 237,  f: 'H₂O',     partner: ['H', 'H'] },
+    CO2:   { s: 197,  f: 'CO₂',     partner: ['C', 'O'] },
+    SO2:   { s: 150,  f: 'SO₂',     partner: ['S', 'O'] },
+    Ag2O:  { s: 11,   f: 'Ag₂O',    partner: ['Ag', 'Ag'] },
+    CuO:   { s: 130,  f: 'CuO',     partner: ['Cu'] },
+    PbO:   { s: 189,  f: 'PbO',     partner: ['Pb'] },
+    Fe2O3: { s: 247,  f: 'Fe₂O₃',   partner: ['Fe', 'Fe'] },
+    ZnO:   { s: 320,  f: 'ZnO',     partner: ['Zn'] },
+    Na2O:  { s: 375,  f: 'Na₂O',    partner: ['Na', 'Na'] },
+    SiO2:  { s: 428,  f: 'SiO₂',    partner: ['Si', 'O'] },
+    Al2O3: { s: 527,  f: 'Al₂O₃',   partner: ['Al', 'Al'] },
+    MgO:   { s: 569,  f: 'MgO',     partner: ['Mg'] },
+    CaO:   { s: 603,  f: 'CaO',     partner: ['Ca'] },
+    GLU:   { s: 152,  f: 'C₆H₁₂O₆', partner: ['C', 'H'] },       // ΔGf°(glucose,s) = −910.4 kJ/mol ÷ 6 O
+  };
+  const OXIDE_OF = {};
+  for (const k in ELEM) if (ELEM[k].oxide) OXIDE_OF[k] = ELEM[k].oxide;
+
+  // Special tiles: transform rules (key = current form -> new form)
+  const SPECIAL = {
+    bolt:    { map: { O2: 'O3' } },                         // lightning: 3 O2 -> 2 O3
+    cloud:   { map: { O3: 'O2' } },                         // ozone breaks down back to O2
+    plant:   { map: { H2O: 'O2', CO2: 'GLU' } },            // photosynthesis: O2 comes from water; CO2's O goes into sugar
+    animal:  { map: { O2: 'H2O', O3: 'H2O', GLU: 'CO2' } }, // respiration: O2 -> water (complex IV); sugar's O -> CO2
+    factory: { map: { Fe2O3: 'CO2', CuO: 'CO2', PbO: 'CO2', ZnO: 'CO2' } }, // carbon reduction in a hot furnace
+  };
+
+  function rng(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function pick(r, table) {
+    let tot = 0; for (const [, w] of table) tot += w;
+    let x = r() * tot;
+    for (const [k, w] of table) { x -= w; if (x <= 0) return k; }
+    return table[table.length - 1][0];
+  }
+
+  const TABLES = {
+    sky: [['N', 46], ['Ar', 6], ['bolt', 8], ['cloud', 7], ['H', 6], ['C', 3], ['S', 2]],
+    surface: [['Fe', 13], ['Cu', 9], ['C', 9], ['H', 10], ['Ag', 6], ['Au', 4], ['Pb', 4], ['Zn', 3],
+              ['plant', 13], ['animal', 10], ['factory', 5], ['Si', 4], ['Al', 2], ['Ca', 1.2], ['Mg', 1.5]],
+  };
+
+  function buildCourse(seed) {
+    const r = rng(seed);
+    const pegs = [];
+    let id = 0;
+    for (const L of LAYERS) {
+      const top = L.key === 'sky' ? 260 : L.y0 + 90;
+      let row = 0;
+      for (let y = top; y < L.y1 - 70; y += 92, row++) {
+        const n = row % 2 ? 4 : 5;
+        const gap = W / (n + (row % 2 ? 1 : 0.0));
+        for (let i = 0; i < n; i++) {
+          const x = (row % 2 ? gap * (i + 1) : gap * (i + 0.5)) + (r() - 0.5) * 22;
+          if (r() < 0.16) continue; // holes
+          const k = pick(r, TABLES[L.key]);
+          pegs.push({ id: id++, x, y: y + (r() - 0.5) * 18, r: 19, k, layer: L.key, special: !!SPECIAL[k] });
+        }
+      }
+      // wall bumpers (half discs)
+      for (let y = L.y0 + 150; y < L.y1 - 40; y += 150) {
+        pegs.push({ id: id++, x: 0, y: y + 30, r: 20, k: 'wall', layer: L.key });
+        pegs.push({ id: id++, x: W, y: y + 105, r: 20, k: 'wall', layer: L.key });
+      }
+    }
+    // bucket rows for collision lookup
+    const rows = new Map();
+    for (const p of pegs) {
+      const b = Math.floor(p.y / 100);
+      for (const bb of [b - 1, b, b + 1]) { if (!rows.has(bb)) rows.set(bb, []); rows.get(bb).push(p); }
+    }
+    return { seed, pegs, rows };
+  }
+
+  function layerAt(y) { for (const L of LAYERS) if (y < L.y1) return L.key; return LAYERS[LAYERS.length - 1].key; }
+
+  // Reaction resolution when touching a peg. Returns {to, kind} or {kind:'weak'|'inert'|'none'}
+  function react(form, peg) {
+    if (peg.k === 'wall') return { kind: 'none' };
+    const sp = SPECIAL[peg.k];
+    if (sp) { const to = sp.map[form]; return to ? { kind: 'special', to } : { kind: 'nothing' }; }
+    const e = ELEM[peg.k];
+    if (e.inert) return { kind: 'inert' };
+    if (e.oxide === form) return { kind: 'same' };
+    if (e.v > FORM[form].s) return { kind: 'grab', to: e.oxide };
+    return { kind: 'weak' };
+  }
+
+  function newGame(course) {
+    return {
+      course, t: 0, x: W / 2, y: 120, vx: 0, vy: 0, r: 10, state: 'aim', form: 'O2',
+      route: ['O2'], log: [], score: 0, touched: new Set(), lastPeg: -1, slow: 0, launches: 0,
+      events: [], maxY: 120, done: false,
+    };
+  }
+
+  const GRAV = 620, E = 0.62, VMAX = 820, DT = 1 / 120;
+
+  function launch(g, dx, dy) {
+    // dx,dy = drag vector (pointer start -> now); fling opposite, slingshot style
+    let vx = -dx * 4.2, vy = -dy * 4.2;
+    const s = Math.hypot(vx, vy); if (s > 760) { vx *= 760 / s; vy *= 760 / s; }
+    g.vx = vx; g.vy = vy; g.state = 'fly'; g.launches++; g.slow = 0;
+    g.events.push({ type: 'launch' });
+  }
+
+  function step(g, dt) {
+    if (g.state !== 'fly') return;
+    let left = dt;
+    while (left > 1e-9) {
+      const h = Math.min(DT, left); left -= h; g.t += h;
+      g.vy += GRAV * h;
+      g.vx *= 0.9995;
+      const sp = Math.hypot(g.vx, g.vy); if (sp > VMAX) { g.vx *= VMAX / sp; g.vy *= VMAX / sp; }
+      g.x += g.vx * h; g.y += g.vy * h;
+      if (g.x < g.r) { g.x = g.r; g.vx = Math.abs(g.vx) * E; }
+      if (g.x > W - g.r) { g.x = W - g.r; g.vx = -Math.abs(g.vx) * E; }
+      if (g.y < g.r) { g.y = g.r; g.vy = Math.abs(g.vy) * E; }
+      const b = Math.floor(g.y / 100);
+      const list = g.course.rows.get(b);
+      if (list) for (const p of list) {
+        const dx = g.x - p.x, dy = g.y - p.y, d = Math.hypot(dx, dy), R = p.r + g.r;
+        if (d < R && d > 1e-6) {
+          const nx = dx / d, ny = dy / d;
+          g.x = p.x + nx * R; g.y = p.y + ny * R;
+          const vn = g.vx * nx + g.vy * ny;
+          if (vn < 0) {
+            const tx = -ny, ty = nx, vt = g.vx * tx + g.vy * ty;
+            g.vx = (-vn * E) * nx + vt * 0.97 * tx;
+            g.vy = (-vn * E) * ny + vt * 0.97 * ty;
+            // never balance on top of a peg
+            if (ny < -0.94 && Math.abs(g.vx) < 25) g.vx += (g.x >= p.x ? 1 : -1) * 45;
+            if (p.id !== g.lastPeg) {
+              g.lastPeg = p.id;
+              g.events.push({ type: 'bounce', k: p.k, v: -vn });
+              touch(g, p);
+            }
+          }
+        }
+      }
+      if (g.y > g.maxY) { g.score += Math.floor((g.y - g.maxY) / 10); g.maxY = g.y; }
+      const s2 = Math.hypot(g.vx, g.vy);
+      g.slow = s2 < 18 ? g.slow + h : 0;
+      if (g.slow > 1.2) { g.state = 'aim'; g.vx = g.vy = 0; g.events.push({ type: 'stuck' }); return; }
+      if (g.y > WORLD_H - g.r - 4) { g.y = WORLD_H - g.r - 4; finish(g); return; }
+    }
+  }
+
+  function touch(g, p) {
+    const res = react(g.form, p);
+    const L = layerAt(p.y);
+    if (res.kind === 'grab' || res.kind === 'special') {
+      const from = g.form;
+      g.form = res.to; g.route.push(res.to);
+      g.score += res.kind === 'grab' ? 30 + Math.round(Math.max(0, ELEM[p.k].v - Math.max(0, FORM[from].s)) / 10) : 40;
+      g.log.push({ y: p.y, layer: L, from, to: res.to, by: p.k, kind: res.kind });
+      g.events.push({ type: 'react', from, to: res.to, by: p.k, kind: res.kind, x: p.x, y: p.y });
+    } else if (!g.touched.has(p.id) && p.k !== 'wall') {
+      g.events.push({ type: 'note', kind: res.kind, by: p.k, x: p.x, y: p.y, form: g.form });
+    }
+    g.touched.add(p.id);
+  }
+
+  function finish(g) {
+    g.state = 'end'; g.done = true; g.vx = g.vy = 0;
+    g.score += 100;
+    g.events.push({ type: 'end', form: g.form });
+  }
+
+  // Monte-Carlo the course: random launches, returns {form: share}
+  function simulate(course, n, seed) {
+    const r = rng(seed || 7);
+    const tally = {};
+    for (let i = 0; i < n; i++) {
+      const g = newGame(course);
+      let guard = 0;
+      while (!g.done && guard++ < 40) {
+        if (g.state === 'aim') launch(g, (r() - 0.5) * 180, -r() * 120);
+        for (let k = 0; k < 120 * 6 && g.state === 'fly'; k++) step(g, DT);
+        g.events.length = 0;
+        if (g.state === 'fly') break;
+      }
+      tally[g.form] = (tally[g.form] || 0) + 1;
+    }
+    for (const k in tally) tally[k] /= n;
+    return tally;
+  }
+
+  function daySeed(d) { return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+
+  G.OXY = { W, LAYERS, WORLD_H, ELEM, FORM, SPECIAL, buildCourse, newGame, launch, step, react, simulate, layerAt, daySeed, DT, GRAV, rng };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>// 氧的一生 · text (zh / en). Original wording.
+(function (G) {
+  const T = {
+    zh: {
+      title: '氧的一生', sub: 'LIFE OF O', course: '今日关卡', best: '最佳', now: '现在的样子', score: '得分', where: '所在',
+      sky: '高空', surface: '地表', crust: '地壳',
+      alt: (km) => `海拔 ${km.toFixed(1)} km`, depth: (m) => `地下 ${m.toFixed(2)} m`,
+      introH: '你是一个氧原子',
+      intro: [
+        '按住屏幕<b>往后拉，松手</b>把自己弹出去，然后一路撞着往下掉。',
+        '撞到<b>更“爱氧”</b>的元素，它就把你抢走，你变成新的物质。',
+        '闪电、云、植物、动物、工厂会用各自的方式改变你。',
+        '掉到底，这一生就定格了。',
+      ],
+      introNote: '圆片上的数字 = 形成该氧化物时每摩尔氧原子的标准吉布斯自由能（|ΔG°f|，kJ/mol，298 K）。数字比你现在的小，就抢不走你，会变淡显示。',
+      start: '开始', again: '再玩一次', share: '保存结局图', lang: 'EN',
+      stuck: '卡住了，再拉一下',
+      inert: { N: 'N₂ 几乎不反应（空气的 78%）', Ar: '氩是惰性气体', Au: '金几乎不会被氧化' },
+      weak: (e, v, s) => `${e} 抓不住你（${v} < ${s}）`,
+      grab: (e, f) => `被 ${e} 抢走 → ${f}`,
+      sp: { bolt: '闪电！3O₂ → 2O₃', cloud: '臭氧分解，变回氧气', plant: '光合作用', animal: '呼吸作用', factory: '高炉里，碳在高温下抢走了你' },
+      spNo: { bolt: '闪电没打中你', cloud: '穿过云层', plant: '植物现在用不上你', animal: '动物现在用不上你', factory: '这座炉子炼不动你' },
+      endH: '你的氧，最后成了……', rare: '稀有度', share_: '同一关卡里随机发射 200 次，以这个样子结束的比例',
+      routeH: '这一生的路线', logH: '旅途记录',
+      tiers: ['传说', '稀有', '少见', '常见'],
+      logLine: (l) => `${l.where} · ${l.from} → ${l.to}（${l.by}）`,
+      sample: '样张 v0.1 · 已开放：高空、地表',
+      credit: '灵感来自 @oga_genkilabo「オキシの一生」· 原创代码与美术 · OiOi MedAI Academy',
+      src: '数据：CRC Handbook，ΔG°f（298 K）',
+    },
+    en: {
+      title: 'Life of O', sub: '氧的一生', course: 'Course', best: 'Best', now: 'You are now', score: 'Score', where: 'Where',
+      sky: 'Sky', surface: 'Surface', crust: 'Crust',
+      alt: (km) => `${km.toFixed(1)} km up`, depth: (m) => `${m.toFixed(2)} m down`,
+      introH: 'You are one oxygen atom',
+      intro: [
+        '<b>Pull back and let go</b> to fling yourself, then bounce all the way down.',
+        'Hit an element that <b>holds oxygen tighter</b> and it takes you: you become something new.',
+        'Lightning, clouds, plants, animals and factories change you in their own ways.',
+        'When you reach the bottom, this life is sealed.',
+      ],
+      introNote: 'Tile number = standard Gibbs energy of formation of that oxide per mole of O atoms (|ΔG°f|, kJ/mol, 298 K). If it is lower than yours, it cannot take you and is drawn faded.',
+      start: 'Start', again: 'Play again', share: 'Save ending card', lang: '中文',
+      stuck: 'Stuck. Pull again',
+      inert: { N: 'N₂ barely reacts (78% of air)', Ar: 'Argon is a noble gas', Au: 'Gold barely oxidises' },
+      weak: (e, v, s) => `${e} can't hold you (${v} < ${s})`,
+      grab: (e, f) => `Taken by ${e} → ${f}`,
+      sp: { bolt: 'Lightning! 3O₂ → 2O₃', cloud: 'Ozone breaks down to O₂', plant: 'Photosynthesis', animal: 'Respiration', factory: 'In the furnace, hot carbon took you' },
+      spNo: { bolt: 'The bolt missed you', cloud: 'Through the cloud', plant: 'The plant has no use for you', animal: 'The animal has no use for you', factory: 'This furnace can\'t smelt you' },
+      endH: 'Your oxygen ended up as…', rare: 'Rarity', share_: 'Share of 200 random launches on this course that ended this way',
+      routeH: 'Route', logH: 'Journey log',
+      tiers: ['Legendary', 'Rare', 'Uncommon', 'Common'],
+      logLine: (l) => `${l.where} · ${l.from} → ${l.to} (${l.by})`,
+      sample: 'Sample v0.1 · open: Sky, Surface',
+      credit: 'Inspired by @oga_genkilabo “Oxy no Issho” · original code & art · OiOi MedAI Academy',
+      src: 'Data: CRC Handbook, ΔG°f (298 K)',
+    },
+  };
+
+  // Endings: one per final form. Facts kept to well-established ones.
+  const END = {
+    O2:    { zh: ['还是一口空气', '兜了一大圈，你还是氧气。地球大气里约 21% 是你这样的 O₂。'],
+             en: ['Still a breath of air', 'After all that, you are still O₂, like about 21% of Earth\'s air.'] },
+    O3:    { zh: ['雷雨后的清新味', '闪电把氧气变成臭氧。雷雨过后空气里那股“清新”的味道，有一部分就是它。'],
+             en: ['The smell after a storm', 'Lightning turned you into ozone, part of that “fresh” smell after a thunderstorm.'] },
+    H2O:   { zh: ['一滴露水', '你和两个氢结合成了水。按质量算，水里约 89% 是氧。'],
+             en: ['A drop of dew', 'You joined two hydrogens as water. By mass, water is about 89% oxygen.'] },
+    CO2:   { zh: ['某人呼出的一口气', '你和碳结合成二氧化碳，也许正从某个人的鼻子里被呼出来。'],
+             en: ['Someone\'s exhaled breath', 'Bound to carbon as CO₂, you may be leaving someone\'s nose right now.'] },
+    GLU:   { zh: ['葡萄里的一点甜', '植物用二氧化碳造糖，你成了葡萄糖分子里的 6 个氧原子之一。'],
+             en: ['A little sweetness in a grape', 'A plant built sugar from CO₂: you are one of the six oxygens in glucose.'] },
+    Fe2O3: { zh: ['一颗生锈的铁钉', '铁锈的主要成分是含水的氧化铁（Fe₂O₃·nH₂O）。'],
+             en: ['A rusty nail', 'Rust is mostly hydrated iron oxide (Fe₂O₃·nH₂O).'] },
+    CuO:   { zh: ['旧铜器上的黑色氧化层', '铜在空气中加热会生成黑色的氧化铜。（绿色的铜绿是另一种东西：碱式碳酸铜。）'],
+             en: ['The black film on old copper', 'Heated copper forms black copper oxide. (Green patina is different: basic copper carbonate.)'] },
+    Ag2O:  { zh: ['一层薄薄的氧化银', '银抓氧的力气很小，每摩尔氧只有约 11 kJ，稍微加热就会放手。（银器发黑主要是硫化银。）'],
+             en: ['A thin film of silver oxide', 'Silver holds oxygen weakly, about 11 kJ per mole of O, and lets go when warmed. (Tarnish is mostly silver sulfide.)'] },
+    PbO:   { zh: ['古老的铅釉', '氧化铅（密陀僧）曾被大量用于陶瓷釉和玻璃。'],
+             en: ['An old lead glaze', 'Lead oxide (litharge) was widely used in pottery glazes and glass.'] },
+    ZnO:   { zh: ['防晒霜里的白色粉末', '氧化锌是常见的物理防晒成分。'],
+             en: ['White powder in sunscreen', 'Zinc oxide is a common mineral sunscreen ingredient.'] },
+    SO2:   { zh: ['火山口的刺鼻气味', '二氧化硫是火山气体的主要成分之一。'],
+             en: ['The sting of a volcano', 'Sulfur dioxide is one of the main volcanic gases.'] },
+    SiO2:  { zh: ['一粒沙子', '石英砂的主要成分就是二氧化硅。'],
+             en: ['A grain of sand', 'Quartz sand is mostly silicon dioxide.'] },
+    Al2O3: { zh: ['一颗红宝石', '红宝石是含微量铬的氧化铝晶体（刚玉）。'],
+             en: ['A ruby', 'Ruby is aluminium oxide (corundum) with a trace of chromium.'] },
+    MgO:   { zh: ['一块耐火砖', '氧化镁熔点约 2800 °C，常用来做耐火材料。'],
+             en: ['A firebrick', 'Magnesium oxide melts at about 2800 °C and lines furnaces.'] },
+    CaO:   { zh: ['一包生石灰', '生石灰遇水会放热，常被用作食品干燥剂。'],
+             en: ['A packet of quicklime', 'Quicklime heats up with water and is used as a food desiccant.'] },
+    Na2O:  { zh: ['窗玻璃的一部分', '普通钠钙玻璃里有一成多是氧化钠。'],
+             en: ['Part of a window', 'Ordinary soda-lime glass is over a tenth sodium oxide.'] },
+  };
+  const NAME = {
+    zh: { O2: '氧气', O3: '臭氧', H2O: '水', CO2: '二氧化碳', GLU: '葡萄糖', Fe2O3: '氧化铁（铁锈）', CuO: '氧化铜', Ag2O: '氧化银', PbO: '氧化铅', ZnO: '氧化锌', SO2: '二氧化硫', SiO2: '二氧化硅', Al2O3: '氧化铝', MgO: '氧化镁', CaO: '氧化钙', Na2O: '氧化钠' },
+    en: { O2: 'oxygen', O3: 'ozone', H2O: 'water', CO2: 'carbon dioxide', GLU: 'glucose', Fe2O3: 'iron oxide (rust)', CuO: 'copper oxide', Ag2O: 'silver oxide', PbO: 'lead oxide', ZnO: 'zinc oxide', SO2: 'sulfur dioxide', SiO2: 'silica', Al2O3: 'alumina', MgO: 'magnesia', CaO: 'quicklime', Na2O: 'sodium oxide' },
+  };
+  G.OXT = { T, END, NAME };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>// 氧的一生 · renderer, input, UI
+(function () {
+  'use strict';
+  const O = window.OXY, X = window.OXT;
+  const Q = new URLSearchParams(location.search);
+  const REC = Q.has('rec');
+  // storage can throw inside sandboxed previews (no allow-same-origin): fall back to memory
+  const MEM = {};
+  const store = { get(k) { try { return window.store.get(k); } catch (e) { return MEM[k] || null; } }, set(k, v) { MEM[k] = String(v); try { window.store.set(k, v); } catch (e) {} } };
+  let lang = Q.get('lang') || store.get('oxy.lang') || 'zh';
+  const t = () => X.T[lang];
+
+  const today = new Date();
+  const seed = +(Q.get('seed') || O.daySeed(today));
+  const course = O.buildCourse(seed);
+  let g = O.newGame(course);
+  const bestKey = 'oxy.best.' + seed;
+
+  // ---------- canvas ----------
+  const cv = document.getElementById('cv'), cx = cv.getContext('2d');
+  let S = 1, VW = O.W, VH = 800, dpr = 1;
+  function resize() {
+    const box = document.getElementById('stage').getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    cv.width = Math.round(box.width * dpr); cv.height = Math.round(box.height * dpr);
+    S = box.width / O.W; VW = O.W; VH = box.height / S;
+  }
+  window.addEventListener('resize', resize);
+
+  let camY = 0;
+  const fx = { toasts: [], sparks: [], flash: 0, trail: [] };
+
+  // ---------- audio (synth) ----------
+  let ac = null;
+  function audio() { if (!ac && !REC) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } return ac; }
+  function blip(freq, dur, type, vol, slide) {
+    const a = ac; if (!a) return;
+    const o = a.createOscillator(), gn = a.createGain(), now = a.currentTime;
+    o.type = type || 'sine'; o.frequency.setValueAtTime(freq, now);
+    if (slide) o.frequency.exponentialRampToValueAtTime(slide, now + dur);
+    gn.gain.setValueAtTime(vol || 0.08, now); gn.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    o.connect(gn).connect(a.destination); o.start(now); o.stop(now + dur + 0.02);
+  }
+  function chord(base) { [1, 1.26, 1.5].forEach((m, i) => setTimeout(() => blip(base * m, 0.35, 'triangle', 0.06), i * 60)); }
+
+  // ---------- events -> fx ----------
+  function sub(f) { return O.FORM[f].f; }
+  function symOf(k) { return k === 'N' ? 'N₂' : k; }
+  const SFX = (window.__sfx = []); let recT = 0;
+  function handleEvents() {
+    for (const e of g.events) {
+      if (REC) SFX.push({ t: recT, type: e.type, k: e.by || e.k, v: e.v || 0, kind: e.kind });
+      if (e.type === 'bounce') {
+        if (e.v > 60) blip(300 + Math.min(500, e.v), 0.05, 'sine', Math.min(0.06, e.v / 9000));
+        hapt(6);
+      } else if (e.type === 'react') {
+        let txt = e.kind === 'grab' ? t().grab(symOf(e.by), sub(e.to)) : t().sp[e.by];
+        toast(txt, e.x, e.y, 'hot');
+        burst(e.x, e.y, e.kind === 'grab' ? colOf(e.by) : '#ffd23f', 18);
+        fx.flash = e.by === 'bolt' ? 0.6 : 0.2;
+        if (e.by === 'bolt') blip(1800, 0.25, 'sawtooth', 0.05, 120); else chord(e.kind === 'grab' ? 440 : 520);
+        hapt(30);
+        pulseCard();
+      } else if (e.type === 'note') {
+        let txt;
+        if (e.kind === 'inert') txt = t().inert[e.by];
+        else if (e.kind === 'weak') txt = t().weak(symOf(e.by), O.ELEM[e.by].v, Math.max(0, O.FORM[e.form].s));
+        else if (e.kind === 'nothing') txt = t().spNo[e.by];
+        else if (e.kind === 'same') txt = null;
+        if (txt) toast(txt, e.x, e.y, 'cool');
+      } else if (e.type === 'stuck') {
+        toast(t().stuck, g.x, g.y - 30, 'cool');
+      } else if (e.type === 'end') {
+        setTimeout(showEnd, REC ? 0 : 650);
+        blip(330, 0.5, 'triangle', 0.07); setTimeout(() => chord(392), 180);
+      } else if (e.type === 'launch') {
+        blip(200, 0.18, 'sine', 0.08, 700);
+      }
+    }
+    g.events.length = 0;
+  }
+  function hapt(ms) { if (!REC && navigator.vibrate) try { navigator.vibrate(ms); } catch (e) {} }
+  function toast(text, x, y, kind) {
+    // keep at most 3, stack upward
+    fx.toasts = fx.toasts.filter((q) => q.age < 2.2).slice(-2);
+    fx.toasts.push({ text, x, y, kind, age: 0 });
+  }
+  function burst(x, y, col, n) {
+    for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, s = 60 + Math.random() * 160; fx.sparks.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0.6 + Math.random() * 0.4, age: 0, col }); }
+  }
+  function colOf(k) { return (O.ELEM[k] && O.ELEM[k].col) || '#ffd23f'; }
+
+  // ---------- drawing ----------
+  const SKY_STOPS = [[0, '#0f1f45'], [0.35, '#2d5fa8'], [0.8, '#8fc4ea'], [1, '#d6ecf7']];
+  function bg() {
+    const W = VW;
+    for (const L of O.LAYERS) {
+      const a = L.y0 - camY, b = L.y1 - camY;
+      if (b < 0 || a > VH) continue;
+      const gr = cx.createLinearGradient(0, a, 0, b);
+      if (L.key === 'sky') SKY_STOPS.forEach(([p, c]) => gr.addColorStop(p, c));
+      else { gr.addColorStop(0, '#9bc46a'); gr.addColorStop(0.06, '#6f9a4a'); gr.addColorStop(0.12, '#8a6a46'); gr.addColorStop(1, '#5b4130'); }
+      cx.fillStyle = gr; cx.fillRect(0, a, W, b - a);
+    }
+    // stars in upper sky
+    cx.fillStyle = 'rgba(255,255,255,0.7)';
+    const r = O.rng(seed + 3);
+    for (let i = 0; i < 70; i++) { const x = r() * W, y = r() * 520 - camY, s = r() * 1.4 + 0.3; if (y > -5 && y < VH) cx.fillRect(x, y, s, s); }
+    // soil specks
+    cx.fillStyle = 'rgba(30,18,8,0.25)';
+    for (let i = 0; i < 260; i++) { const x = r() * W, y = 1380 + r() * 1300 - camY, s = r() * 3 + 1; if (y > -5 && y < VH) { cx.beginPath(); cx.arc(x, y, s, 0, 6.283); cx.fill(); } }
+    // grass line
+    const gy = 1300 - camY;
+    if (gy > -40 && gy < VH + 40) {
+      cx.strokeStyle = '#4f7d2f'; cx.lineWidth = 2;
+      for (let x = 2; x < W; x += 5) { cx.beginPath(); cx.moveTo(x, gy + 6); cx.lineTo(x + Math.sin(x * 1.7) * 3, gy - 6 - (x * 37 % 7)); cx.stroke(); }
+    }
+    // layer labels + scale ticks
+    cx.font = '600 11px ui-sans-serif, system-ui, sans-serif'; cx.textAlign = 'right';
+    for (let y = 0; y <= O.WORLD_H; y += 260) {
+      const sy = y - camY; if (sy < 0 || sy > VH) continue;
+      cx.fillStyle = y < 1300 ? 'rgba(255,255,255,0.55)' : 'rgba(255,240,220,0.5)';
+      cx.fillRect(W - 8, sy, 8, 1);
+      cx.fillText(locLabel(y), W - 12, sy + 4);
+    }
+    cx.textAlign = 'left';
+    for (const L of O.LAYERS) {
+      const sy = L.y0 - camY + 22; if (sy < -20 || sy > VH) continue;
+      pill(t()[L.key], 10, sy - 14, L.key === 'sky' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.22)', '#fff');
+    }
+    // bottom of sample
+    const by = O.WORLD_H - camY;
+    if (by < VH + 20) { cx.fillStyle = '#2a1c14'; cx.fillRect(0, by - 6, W, 60); cx.fillStyle = 'rgba(255,230,200,0.7)'; cx.textAlign = 'center'; cx.font = '600 11px system-ui'; cx.fillText(lang === 'zh' ? '— 地壳（完整版开放）—' : '— Crust (full version) —', W / 2, by + 14); cx.textAlign = 'left'; }
+  }
+  function locLabel(y) {
+    if (y <= 1300) return t().alt(10 * (1 - y / 1300));
+    return t().depth((y - 1300) / 1400 * 3);
+  }
+  function pill(text, x, y, bgc, fg) {
+    cx.font = '700 12px system-ui, sans-serif';
+    const w = cx.measureText(text).width + 16;
+    cx.fillStyle = bgc; rr(x, y, w, 20, 10); cx.fill();
+    cx.fillStyle = fg; cx.fillText(text, x + 8, y + 14);
+  }
+  function rr(x, y, w, h, r) { cx.beginPath(); cx.moveTo(x + r, y); cx.arcTo(x + w, y, x + w, y + h, r); cx.arcTo(x + w, y + h, x, y + h, r); cx.arcTo(x, y + h, x, y, r); cx.arcTo(x, y, x + w, y, r); cx.closePath(); }
+
+  function drawPeg(p, time) {
+    const y = p.y - camY; if (y < -40 || y > VH + 40) return;
+    if (p.k === 'wall') {
+      cx.fillStyle = 'rgba(15,20,35,0.85)'; cx.beginPath(); cx.arc(p.x, y, p.r, 0, 6.283); cx.fill(); return;
+    }
+    const res = g.state !== 'end' ? O.react(g.form, p) : { kind: 'x' };
+    const live = res.kind === 'grab' || res.kind === 'special';
+    const dim = res.kind === 'weak' || res.kind === 'inert' || res.kind === 'nothing' || res.kind === 'same';
+    cx.save(); cx.globalAlpha = dim ? 0.42 : 1;
+    if (p.special) { drawSpecial(p, y, live, time); cx.restore(); return; }
+    const e = O.ELEM[p.k];
+    if (live) { // breathing glow: this one can take you
+      const pr = 0.5 + 0.5 * Math.sin(time * 5 + p.id);
+      cx.fillStyle = `rgba(255,70,70,${0.18 + 0.15 * pr})`; cx.beginPath(); cx.arc(p.x, y, p.r + 6 + pr * 2, 0, 6.283); cx.fill();
+    }
+    cx.fillStyle = e.col; cx.beginPath(); cx.arc(p.x, y, p.r, 0, 6.283); cx.fill();
+    cx.fillStyle = 'rgba(255,255,255,0.35)'; cx.beginPath(); cx.arc(p.x - 6, y - 7, 6, 0, 6.283); cx.fill();
+    cx.lineWidth = 2; cx.strokeStyle = e.inert ? 'rgba(80,90,110,0.6)' : 'rgba(0,0,0,0.25)';
+    if (e.inert) cx.setLineDash([3, 3]);
+    cx.beginPath(); cx.arc(p.x, y, p.r, 0, 6.283); cx.stroke(); cx.setLineDash([]);
+    cx.fillStyle = e.ink; cx.textAlign = 'center';
+    cx.font = `800 ${p.k.length > 1 || p.k === 'N' ? 14 : 16}px ui-rounded, system-ui, sans-serif`;
+    cx.fillText(symOf(p.k), p.x, y + (e.inert ? 5 : 2));
+    if (!e.inert) { cx.font = '700 9px system-ui'; cx.fillText(e.v, p.x, y + 13); }
+    cx.textAlign = 'left';
+    cx.restore();
+  }
+  function drawSpecial(p, y, live, time) {
+    const x = p.x, k = p.k;
+    const ring = { bolt: '#ffd23f', cloud: '#ffffff', plant: '#62c26b', animal: '#f29a6b', factory: '#9aa3b5' }[k];
+    if (live) { const pr = 0.5 + 0.5 * Math.sin(time * 5 + p.id); cx.fillStyle = `rgba(255,210,63,${0.2 + 0.2 * pr})`; cx.beginPath(); cx.arc(x, y, p.r + 7, 0, 6.283); cx.fill(); }
+    cx.fillStyle = 'rgba(255,255,255,0.92)'; cx.beginPath(); cx.arc(x, y, p.r, 0, 6.283); cx.fill();
+    cx.lineWidth = 2.5; cx.strokeStyle = ring; cx.beginPath(); cx.arc(x, y, p.r, 0, 6.283); cx.stroke();
+    cx.save(); cx.translate(x, y);
+    if (k === 'bolt') { cx.fillStyle = '#f5b700'; cx.beginPath(); cx.moveTo(3, -12); cx.lineTo(-7, 2); cx.lineTo(-1, 2); cx.lineTo(-4, 12); cx.lineTo(7, -3); cx.lineTo(1, -3); cx.closePath(); cx.fill(); }
+    if (k === 'cloud') { cx.fillStyle = '#9fb7cf'; [[-6, 2, 6], [0, -3, 7], [7, 2, 5], [0, 4, 6]].forEach(([a, b, r]) => { cx.beginPath(); cx.arc(a, b, r, 0, 6.283); cx.fill(); }); }
+    if (k === 'plant') { cx.fillStyle = '#3f9b48'; cx.beginPath(); cx.ellipse(-5, -2, 7, 4, -0.6, 0, 6.283); cx.fill(); cx.beginPath(); cx.ellipse(5, -5, 7, 4, 0.6, 0, 6.283); cx.fill(); cx.strokeStyle = '#3f9b48'; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(0, 10); cx.lineTo(0, -2); cx.stroke(); }
+    if (k === 'animal') { cx.fillStyle = '#d9754a'; cx.beginPath(); cx.ellipse(0, 4, 6, 5, 0, 0, 6.283); cx.fill(); [[-7, -3], [-3, -8], [3, -8], [7, -3]].forEach(([a, b]) => { cx.beginPath(); cx.arc(a, b, 2.6, 0, 6.283); cx.fill(); }); }
+    if (k === 'factory') { cx.fillStyle = '#5f687a'; cx.fillRect(-10, -1, 20, 10); cx.beginPath(); cx.moveTo(-10, -1); cx.lineTo(-4, -6); cx.lineTo(-4, -1); cx.lineTo(2, -6); cx.lineTo(2, -1); cx.fill(); cx.fillRect(5, -11, 4, 10); cx.fillStyle = 'rgba(120,120,130,0.6)'; cx.beginPath(); cx.arc(8, -14 - (time * 8 % 4), 3, 0, 6.283); cx.fill(); }
+    cx.restore();
+  }
+
+  const CPK = { O: '#e8413a', H: '#f4f6fa', C: '#3b3f46', S: '#f1d54a' };
+  function atomCol(k) { return CPK[k] || (O.ELEM[k] && O.ELEM[k].col) || '#999'; }
+  function drawMolecule(x, y, ang, form, scale) {
+    const parts = O.FORM[form].partner;
+    const R = 10 * scale;
+    cx.save(); cx.translate(x, y); cx.rotate(ang);
+    const pos = parts.length === 1 ? [[R * 1.25, 0]] : [[R * 1.15, -R * 0.75], [R * 1.15, R * 0.75]];
+    if (form === 'O3') { pos[0] = [R * 1.2, -R * 0.8]; pos[1] = [-R * 1.2, -R * 0.8]; }
+    parts.forEach((k, i) => {
+      const [px, py] = pos[i]; const pr = R * (k === 'H' ? 0.62 : 0.85);
+      ball(px, py, pr, atomCol(k));
+    });
+    ball(0, 0, R, CPK.O, true);
+    cx.restore();
+  }
+  function ball(x, y, r, col, me) {
+    cx.fillStyle = col; cx.beginPath(); cx.arc(x, y, r, 0, 6.283); cx.fill();
+    cx.lineWidth = 1.5; cx.strokeStyle = 'rgba(0,0,0,0.35)'; cx.stroke();
+    cx.fillStyle = 'rgba(255,255,255,0.55)'; cx.beginPath(); cx.arc(x - r * 0.35, y - r * 0.38, r * 0.32, 0, 6.283); cx.fill();
+    if (me) { // eyes: this is you
+      cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(x - r * 0.05, y + r * 0.05, r * 0.26, 0, 6.283); cx.arc(x + r * 0.45, y + r * 0.05, r * 0.26, 0, 6.283); cx.fill();
+      cx.fillStyle = '#1a1a1a'; cx.beginPath(); cx.arc(x + r * 0.02, y + r * 0.1, r * 0.12, 0, 6.283); cx.arc(x + r * 0.52, y + r * 0.1, r * 0.12, 0, 6.283); cx.fill();
+    }
+  }
+
+  let ang = 0, aim = null; // aim = {sx,sy,dx,dy}
+  function frame(dt, time) {
+    if (g.state === 'fly') O.step(g, dt);
+    handleEvents();
+    // camera
+    const target = Math.max(0, Math.min(O.WORLD_H - VH + 40, g.y - VH * 0.38));
+    camY += (target - camY) * Math.min(1, dt * 6);
+    // trail
+    if (g.state === 'fly') { fx.trail.push({ x: g.x, y: g.y }); if (fx.trail.length > 26) fx.trail.shift(); } else if (fx.trail.length) fx.trail.shift();
+    ang = Math.atan2(g.vy, g.vx) * 0 + (ang + dt * (g.vx / 40));
+    // draw
+    cx.setTransform(dpr * S, 0, 0, dpr * S, 0, 0);
+    bg();
+    for (const p of course.pegs) drawPeg(p, time);
+    // trail
+    for (let i = 1; i < fx.trail.length; i++) {
+      const a = fx.trail[i - 1], b = fx.trail[i];
+      cx.strokeStyle = `rgba(232,65,58,${i / fx.trail.length * 0.5})`; cx.lineWidth = i / fx.trail.length * 9; cx.lineCap = 'round';
+      cx.beginPath(); cx.moveTo(a.x, a.y - camY); cx.lineTo(b.x, b.y - camY); cx.stroke();
+    }
+    // aim guide
+    if (g.state === 'aim' && aim) {
+      let vx = -aim.dx * 4.2, vy = -aim.dy * 4.2; const s = Math.hypot(vx, vy); if (s > 760) { vx *= 760 / s; vy *= 760 / s; }
+      cx.fillStyle = 'rgba(255,255,255,0.9)';
+      for (let i = 1; i < 16; i++) { const tt = i * 0.045; const px = g.x + vx * tt, py = g.y + vy * tt + 0.5 * O.GRAV * tt * tt; cx.beginPath(); cx.arc(px, py - camY, 2.6 - i * 0.12, 0, 6.283); cx.fill(); }
+      cx.strokeStyle = 'rgba(255,255,255,0.5)'; cx.lineWidth = 2; cx.setLineDash([4, 4]);
+      cx.beginPath(); cx.moveTo(g.x, g.y - camY); cx.lineTo(g.x + aim.dx, g.y + aim.dy - camY); cx.stroke(); cx.setLineDash([]);
+    }
+    if (g.state === 'aim' && !aim) { // hint ring
+      const pr = (time * 1.2) % 1; cx.strokeStyle = `rgba(255,255,255,${1 - pr})`; cx.lineWidth = 2; cx.beginPath(); cx.arc(g.x, g.y - camY, 14 + pr * 22, 0, 6.283); cx.stroke();
+    }
+    drawMolecule(g.x, g.y - camY, ang, g.form, 1);
+    // sparks
+    for (const s of fx.sparks) { s.age += dt; s.x += s.vx * dt; s.y += s.vy * dt; s.vy += 300 * dt; cx.globalAlpha = Math.max(0, 1 - s.age / s.life); cx.fillStyle = s.col; cx.beginPath(); cx.arc(s.x, s.y - camY, 2.5, 0, 6.283); cx.fill(); }
+    cx.globalAlpha = 1; fx.sparks = fx.sparks.filter((s) => s.age < s.life);
+    // toasts
+    fx.toasts.forEach((q, i) => {
+      q.age += dt; const a = q.age < 0.15 ? q.age / 0.15 : Math.max(0, 1 - (q.age - 1.6) / 0.6);
+      if (a <= 0) return;
+      cx.globalAlpha = a; cx.font = '700 12px system-ui, sans-serif';
+      const w = Math.min(VW - 20, cx.measureText(q.text).width + 18);
+      let x = Math.max(10, Math.min(VW - w - 10, q.x - w / 2)), y = q.y - camY - 44 - (fx.toasts.length - 1 - i) * 26 - q.age * 10;
+      cx.fillStyle = q.kind === 'hot' ? '#e8413a' : 'rgba(255,255,255,0.95)'; rr(x, y, w, 22, 11); cx.fill();
+      cx.fillStyle = q.kind === 'hot' ? '#fff' : '#26324a'; cx.fillText(q.text, x + 9, y + 15, w - 18);
+      cx.globalAlpha = 1;
+    });
+    if (fx.flash > 0) { cx.fillStyle = `rgba(255,255,230,${fx.flash * 0.55})`; cx.fillRect(0, 0, VW, VH); fx.flash = Math.max(0, fx.flash - dt * 3); }
+    hud();
+  }
+
+  // ---------- HUD (DOM) ----------
+  const $ = (id) => document.getElementById(id);
+  let lastHud = '';
+  function hud() {
+    const L = O.layerAt(g.y);
+    const key = [g.form, Math.round(g.y / 10), g.score, lang].join('|');
+    if (key === lastHud) return; lastHud = key;
+    $('formula').textContent = O.FORM[g.form].f;
+    $('fname').textContent = X.NAME[lang][g.form];
+    $('where').textContent = t()[L] + ' · ' + locLabel(g.y);
+    $('score').textContent = g.score.toLocaleString();
+  }
+  function pulseCard() { const c = $('card'); c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse'); }
+  function staticText() {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    $('t-title').textContent = t().title; $('t-sub').textContent = t().sub;
+    $('t-course').textContent = `${t().course} ${String(seed).slice(4, 6)}/${String(seed).slice(6, 8)}`;
+    const b = +store.get(bestKey) || 0; $('t-best').textContent = `${t().best} ${b ? b.toLocaleString() : '—'}`;
+    $('t-now').textContent = t().now; $('t-score').textContent = t().score;
+    $('langBtn').textContent = t().lang;
+    $('introH').textContent = t().introH;
+    $('introP').innerHTML = t().intro.map((s) => `<p>${s}</p>`).join('');
+    $('introNote').textContent = t().introNote; $('startBtn').textContent = t().start;
+    $('sample').textContent = t().sample; $('credit').textContent = t().credit;
+    lastHud = '';
+    if (!$('end').hidden) fillEnd();
+  }
+
+  // ---------- ending ----------
+  let mc = null;
+  function rarity() {
+    if (!mc) mc = O.simulate(course, 200, seed);
+    return mc[g.form] || 0;
+  }
+  function tier(p) { return p < 0.02 ? 0 : p < 0.08 ? 1 : p < 0.25 ? 2 : 3; }
+  function fillEnd() {
+    const E = X.END[g.form][lang], p = rarity();
+    $('endH').textContent = t().endH;
+    $('endF').textContent = O.FORM[g.form].f;
+    $('endT').textContent = E[0]; $('endD').textContent = E[1];
+    $('rareL').textContent = t().rare; $('rareT').textContent = t().tiers[tier(p)];
+    $('rareP').textContent = p < 0.01 ? '<1%' : (p * 100).toFixed(p < 0.1 ? 1 : 0) + '%'; $('rareN').textContent = t().share_;
+    $('endScore').textContent = `${t().score} ${g.score.toLocaleString()}`;
+    $('routeH').textContent = t().routeH;
+    $('route').innerHTML = g.route.map((f) => `<span>${O.FORM[f].f}</span>`).join('<i>→</i>');
+    $('logH').textContent = t().logH;
+    $('log').innerHTML = g.log.map((l) => `<li><b>${t()[l.layer]} · ${locLabel(l.y)}</b>${O.FORM[l.from].f} → ${O.FORM[l.to].f}<em>${l.kind === 'grab' ? t().grab(symOf(l.by), O.FORM[l.to].f) : t().sp[l.by]}</em></li>`).join('') || `<li>—</li>`;
+    $('againBtn').textContent = t().again; $('shareBtn').textContent = t().share; $('src').textContent = t().src;
+    $('end').dataset.tier = tier(p);
+  }
+  function showEnd() {
+    const b = +store.get(bestKey) || 0; if (g.score > b) store.set(bestKey, g.score);
+    fillEnd(); $('end').hidden = false; requestAnimationFrame(() => $('end').classList.add('show'));
+    staticText();
+  }
+  function restart() {
+    $('end').classList.remove('show'); $('end').hidden = true;
+    g = O.newGame(course); camY = 0; fx.trail = []; fx.toasts = []; aim = null; lastHud = '';
+  }
+  function shareCard() {
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const k = c.getContext('2d');
+    const gr = k.createLinearGradient(0, 0, 0, 1350); gr.addColorStop(0, '#16285a'); gr.addColorStop(0.55, '#3f7dbf'); gr.addColorStop(0.56, '#7a5a3c'); gr.addColorStop(1, '#3b2a1f'); k.fillStyle = gr; k.fillRect(0, 0, 1080, 1350);
+    k.fillStyle = '#fffaf2'; k.beginPath(); k.roundRect(70, 150, 940, 1060, 48); k.fill();
+    const E = X.END[g.form][lang], p = rarity();
+    k.fillStyle = '#e8413a'; k.font = '800 56px system-ui, sans-serif'; k.fillText(t().title, 120, 250);
+    k.fillStyle = '#6b7385'; k.font = '600 32px system-ui'; k.fillText(t().endH, 120, 330);
+    k.fillStyle = '#1b2233'; k.font = '900 150px system-ui'; k.fillText(O.FORM[g.form].f, 120, 500);
+    k.font = '800 64px system-ui'; k.fillText(E[0], 120, 600);
+    k.fillStyle = '#4a5368'; k.font = '500 34px system-ui'; wrap(k, E[1], 120, 670, 840, 48);
+    k.fillStyle = '#e8413a'; k.font = '800 40px system-ui'; k.fillText(`${t().rare} · ${t().tiers[tier(p)]} · ${p < 0.01 ? '<1' : (p * 100).toFixed(1)}%`, 120, 870);
+    k.fillStyle = '#1b2233'; k.font = '700 34px system-ui'; wrap(k, g.route.map((f) => O.FORM[f].f).join(' → '), 120, 950, 840, 46);
+    k.fillStyle = '#8a92a3'; k.font = '500 26px system-ui'; k.fillText(`${t().score} ${g.score} · ${t().course} ${seed}`, 120, 1150);
+    k.fillStyle = 'rgba(255,255,255,0.8)'; k.font = '600 26px system-ui'; k.fillText('OiOi MedAI Academy · oioi-academy.com', 120, 1290);
+    const url = c.toDataURL('image/png');
+    try { const a = document.createElement('a'); a.download = `life-of-o-${g.form}.png`; a.href = url; document.body.appendChild(a); a.click(); a.remove(); } catch (e) {}
+    showImg(url);
+  }
+  function showImg(url) { // in previews where downloads are blocked: long-press / right-click to save
+    let d = document.getElementById('imgView'); if (!d) { d = document.createElement('div'); d.id = 'imgView'; d.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px'; d.onclick = () => d.remove(); document.getElementById('app').appendChild(d); }
+    d.innerHTML = `<img src="${url}" style="max-width:100%;max-height:100%;border-radius:12px">`;
+  }
+  function wrap(k, s, x, y, w, lh) { let line = ''; for (const ch of s) { if (k.measureText(line + ch).width > w) { k.fillText(line, x, y); y += lh; line = ch; } else line += ch; } k.fillText(line, x, y); }
+
+  // ---------- input ----------
+  let drag = null;
+  function wpos(e) { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / S, y: (e.clientY - r.top) / S + camY }; }
+  cv.addEventListener('pointerdown', (e) => { if (g.state !== 'aim' || !$('intro').hidden) return; audio(); if (ac && ac.state === 'suspended') ac.resume(); drag = wpos(e); aim = { dx: 0, dy: 0 }; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', (e) => { if (!drag) return; const p = wpos(e); let dx = p.x - drag.x, dy = p.y - drag.y; const m = Math.hypot(dx, dy); if (m > 180) { dx *= 180 / m; dy *= 180 / m; } aim = { dx, dy }; });
+  const up = () => { if (!drag) return; drag = null; if (aim && Math.hypot(aim.dx, aim.dy) > 12) O.launch(g, aim.dx, aim.dy); aim = null; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  $('startBtn').onclick = () => { audio(); $('intro').hidden = true; };
+  $('againBtn').onclick = restart; $('shareBtn').onclick = shareCard;
+  $('langBtn').onclick = () => { lang = lang === 'zh' ? 'en' : 'zh'; store.set('oxy.lang', lang); staticText(); };
+  $('helpBtn').onclick = () => { $('intro').hidden = false; };
+
+  // ---------- loop ----------
+  resize(); staticText();
+  if (!REC) {
+    let last = performance.now();
+    const loop = (now) => { const dt = Math.min(0.05, (now - last) / 1000); last = now; frame(dt, now / 1000); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    setTimeout(() => { if (!mc) mc = O.simulate(course, 200, seed); }, 1500);
+  } else {
+    // record mode: virtual clock + scripted pulls. ?rec&seed=..&pulls=dx,dy;dx,dy
+    $('intro').hidden = Q.get('intro') !== '1';
+    const pulls = (Q.get('pulls') || '40,-60').split(';').map((s) => s.split(',').map(Number));
+    let vt = 0, pi = 0, aimT = -1;
+    window.__frame = (dt) => {
+      vt += dt; recT = vt;
+      if (!$('intro').hidden) { if (vt > (+Q.get('introT') || 2.2)) $('intro').hidden = true; frame(dt, vt); return; }
+      if (g.state === 'aim') {
+        if (aimT < 0) aimT = vt;
+        const [dx, dy] = pulls[Math.min(pi, pulls.length - 1)];
+        const k = Math.min(1, (vt - aimT) / 0.9); aim = { dx: dx * k, dy: dy * k };
+        if (vt - aimT > 1.25) { O.launch(g, dx, dy); aim = null; aimT = -1; pi++; }
+      }
+      frame(dt, vt);
+    };
+    window.__state = () => ({ state: g.state, form: g.form, route: g.route, score: g.score, y: g.y, t: g.t });
+  }
+})();
+</script>
+</body>
+</html>
